@@ -10,7 +10,6 @@ import {
   BookHeart,
   Flower2,
   Users,
-  Check,
   ChevronDown,
 } from "lucide-react";
 import {
@@ -20,8 +19,13 @@ import {
   CheckLine,
 } from "@/components/common/ui";
 import { useDemo } from "@/components/providers";
+import { money, totalFor } from "@/lib/utils";
 export default function Home() {
   const { state } = useDemo();
+  const heroCampaign =
+    state.campaigns.find((campaign) => campaign.id === "kwasi-mensah") ??
+    state.campaigns[0];
+  const heroTotal = totalFor(state.contributions, heroCampaign?.id);
   return (
     <>
       <Navbar />
@@ -29,20 +33,17 @@ export default function Home() {
         <section className="hero container">
           <div className="hero-copy">
             <div className="eyebrow hero-eyebrow">
-              <span className="tiny-flower">✳</span> A TRADITION OF
-              TOGETHERNESS, REIMAGINED
+              <Flower2 size={18} strokeWidth={1.5} /> A place to remember. A way
+              to stand together.
             </div>
             <h1>
-              Honouring lives.
+              When a family needs
               <br />
-              Supporting families.
-              <br />
-              <em>Together.</em>
+              <em>each other.</em>
             </h1>
             <p>
-              A thoughtful way to remember a loved one and bring funeral
-              contributions together. Rooted in Ghanaian tradition. Made for the
-              way we connect today.
+              Create a beautiful memorial, share funeral details, and bring
+              every gesture of support into one thoughtful place.
             </p>
             <div className="hero-actions">
               <Link
@@ -58,45 +59,50 @@ export default function Home() {
             <div className="hero-trust">
               <span>
                 <ShieldCheck size={17} />
-                Transparent contributions
+                Clear contribution records
               </span>
               <span>
-                <Heart size={16} />
-                Built with care
+                <Globe2 size={16} />
+                Family and friends, anywhere
               </span>
             </div>
           </div>
-          <div className="hero-visual">
-            <img
-              className="hero-image"
-              src="/images/hero.jpg"
-              alt="Delicate flowers in soft light, a quiet symbol of remembrance"
-            />
-            <div className="hero-shade" />
-            <div className="visual-top">
-              <Flower2 size={29} strokeWidth={1} />
-              <span>EVERY LIFE LEAVES A LEGACY.</span>
-            </div>
-            <div className="visual-quote">
-              <span className="quote-rule" />
-              <p>
-                Love doesn’t end.
-                <br />
-                It brings us together.
-              </p>
-              <span>In remembrance. In community.</span>
-            </div>
-            <div className="floating-note">
-              <span className="note-icon">
-                <Heart size={21} />
-              </span>
-              <div>
-                <strong>A little support. A lasting comfort.</strong>
-                <span>Be there for a family, from anywhere.</span>
+          <div className="hero-visual hero-memorial-stage">
+            <div className="hero-orbit hero-orbit-one" />
+            <div className="hero-orbit hero-orbit-two" />
+            <div className="hero-memory-card">
+              <div className="hero-memory-image">
+                <img
+                  src={heroCampaign?.image ?? "/images/kwasi-portrait.png"}
+                  alt={`Portrait of ${heroCampaign?.name ?? "Nana Kwasi Mensah"}`}
+                />
+                <span>IN LOVING MEMORY</span>
               </div>
-              <span className="note-check">
-                <Check size={16} />
-              </span>
+              <div className="hero-memory-copy">
+                <p>{heroCampaign?.location ?? "Kumasi, Ghana"}</p>
+                <h2>{heroCampaign?.name ?? "Nana Kwasi Mensah"}</h2>
+                <span>{heroCampaign?.years ?? "1948 — 2026"}</span>
+                <div className="hero-card-progress">
+                  <div>
+                    <span>Community support</span>
+                    <strong>{money(heroTotal)}</strong>
+                  </div>
+                  <div className="hero-progress-line">
+                    <span
+                      style={{
+                        width: `${Math.min(
+                          100,
+                          Math.round((heroTotal / (heroCampaign?.target ?? 1)) * 100),
+                        )}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="hero-side-note">
+              <Heart size={18} fill="currentColor" />
+              <span>Every contribution is a way of saying, “we are with you.”</span>
             </div>
           </div>
         </section>
