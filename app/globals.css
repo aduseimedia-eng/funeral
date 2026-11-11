@@ -3226,7 +3226,7 @@ select:focus {
 .hero.hero-full .hero-eyebrow {
   margin-bottom: 22px;
   color: #eacb85;
-  font-size: 10px !important;
+  font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .13em !important;
 }
@@ -4513,7 +4513,7 @@ body:has(.hero-full) .nav-actions .btn {
   display: inline-flex;
   margin: 0 0 19px;
   color: #e5bf6f;
-  font-size: 10px !important;
+  font-size: 12px !important;
   font-weight: 700;
   letter-spacing: .19em !important;
   text-transform: uppercase;
@@ -4521,7 +4521,7 @@ body:has(.hero-full) .nav-actions .btn {
 .hero.hero-full .hero-statement h1 {
   margin: 0;
   color: #fffdf8;
-  font-size: clamp(68px, 7.4vw, 104px);
+  font-size: clamp(78px, 8.2vw, 118px);
   font-weight: 700;
   line-height: .88;
   letter-spacing: -.08em;
@@ -4535,22 +4535,22 @@ body:has(.hero-full) .nav-actions .btn {
 }
 .hero.hero-full .hero-minimal-line {
   width: fit-content;
-  max-width: 340px;
-  margin: 30px 0 0;
-  padding-top: 14px;
+  max-width: 390px;
+  margin: 34px 0 0;
+  padding-top: 16px;
   border-top: 1px solid #dfb7647a;
   color: #ece3d2;
-  font-size: 14px !important;
+  font-size: 17px !important;
   font-weight: 500;
   line-height: 1.5;
 }
 @media (max-width: 640px) {
   .hero.hero-full .hero-statement h1 {
-    font-size: clamp(58px, 15.5vw, 76px);
+    font-size: clamp(66px, 16.5vw, 86px);
   }
   .hero.hero-full .hero-minimal-line {
-    max-width: 270px;
+    max-width: 310px;
     margin-top: 25px;
-    font-size: 13px !important;
+    font-size: 15px !important;
   }
 }
