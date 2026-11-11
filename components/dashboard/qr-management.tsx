@@ -64,7 +64,7 @@ export function QRManagement() {
       ctx.strokeRect(35, 35, 930, 1344);
       ctx.textAlign = "center";
       ctx.fillStyle = "#9f8757";
-      ctx.font = "22px 'DM Serif Display', Georgia, serif";
+      ctx.font = "600 22px Inter, Arial, sans-serif";
       ctx.fillText("IN LOVING MEMORY", 500, 105);
       const portrait = await loadImage(c.image);
       const ratio = Math.max(245 / portrait.width, 290 / portrait.height);
@@ -81,7 +81,7 @@ export function QRManagement() {
       );
       ctx.restore();
       ctx.fillStyle = "#2d392c";
-      ctx.font = "46px 'DM Serif Display', Georgia, serif";
+      ctx.font = "700 46px Inter, Arial, sans-serif";
       const lines =
         c.name.length > 29
           ? [
@@ -95,7 +95,7 @@ export function QRManagement() {
       ctx.fillText(c.years, 500, 610);
       ctx.drawImage(await loadImage(qr), 300, 650, 400, 400);
       ctx.fillStyle = "#2d392c";
-      ctx.font = "29px 'DM Serif Display', Georgia, serif";
+      ctx.font = "600 29px Inter, Arial, sans-serif";
       ctx.fillText("Scan to remember. Scan to support.", 500, 1115);
       ctx.fillStyle = "#7e8571";
       ctx.font = "19px Arial";
@@ -105,7 +105,7 @@ export function QRManagement() {
       ctx.font = "16px Arial";
       ctx.fillText("DEMONSTRATION ONLY - NO REAL PAYMENTS", 500, 1270);
       ctx.fillStyle = "#a68a50";
-      ctx.font = "28px 'DM Serif Display', Georgia, serif";
+      ctx.font = "700 28px Inter, Arial, sans-serif";
       ctx.fillText("Nsaabɔdeɛ", 500, 1330);
       const data = canvas.toDataURL("image/png");
       if (kind === "pdf") {
