@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;450;500;550;600;650;700&family=Libre+Caslon+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap");
 @import "tailwindcss";
 :root {
   --bg: #fcfbf8;
@@ -8,7 +8,8 @@
   --line: #e6e5dd;
   --cream: #f2f0e8;
   --green: #3a5745;
-  --font-sans: "DM Sans", Arial, sans-serif;
+  --font-sans: "Manrope", Arial, sans-serif;
+  --font-display: "DM Serif Display", Georgia, serif;
 }
 * {
   box-sizing: border-box;
@@ -76,7 +77,7 @@ p {
 h1,
 h2,
 .serif {
-  font-family: "Libre Caslon Display", Georgia, serif;
+  font-family: var(--font-display);
   font-weight: 400;
   letter-spacing: -0.035em;
 }
@@ -126,7 +127,7 @@ p {
   display: inline-flex;
   gap: 10px;
   align-items: center;
-  font-family: "Libre Caslon Display", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 30px;
   font-weight: 400;
   letter-spacing: -0.7px;
@@ -324,9 +325,7 @@ p {
 }
 .visual-quote p {
   font:
-    42px/1.08 "Libre Caslon Display",
-    Georgia,
-    serif;
+    42px/1.08 var(--font-display);
   color: #f8f5ea;
   letter-spacing: -0.5px;
 }
@@ -434,7 +433,7 @@ p {
 }
 .step-top span {
   color: #c4c0b1;
-  font-family: Georgia, serif;
+  font-family: var(--font-display);
   font-size: 23px;
 }
 .step h3 {
@@ -530,7 +529,7 @@ p {
   gap: 8px;
 }
 .campaign-body h3 {
-  font-family: "Libre Caslon Display", Georgia, serif;
+  font-family: var(--font-display);
   font-size: 29px;
   margin-top: 10px;
   letter-spacing: -0.4px;
@@ -746,7 +745,7 @@ p {
   color: var(--gold);
 }
 .qr-poster-mini h3 {
-  font-family: Georgia, serif;
+  font-family: var(--font-display);
   font-size: 17px;
   margin-top: 9px;
 }
@@ -761,7 +760,7 @@ p {
   margin: 0;
 }
 .qr-poster-mini small {
-  font-family: Georgia, serif;
+  font-family: var(--font-display);
   color: #9b885d;
   margin-top: 15px;
   font-size: 13px;
