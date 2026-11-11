@@ -114,12 +114,12 @@ export function AnalyticsChart({
               dataKey="name"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 8, fill: "#929b85" }}
+              tick={{ fontSize: 10, fill: "#929b85" }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 8, fill: "#a0a98f" }}
+              tick={{ fontSize: 10, fill: "#a0a98f" }}
               allowDecimals={false}
             />
             <Tooltip />
@@ -137,7 +137,7 @@ export function AnalyticsChart({
               dataKey="name"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 8, fill: "#929b85" }}
+              tick={{ fontSize: 10, fill: "#929b85" }}
             />
             <YAxis
               allowDecimals={false}
@@ -169,13 +169,13 @@ export function AnalyticsChart({
               dataKey="name"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 8, fill: "#98a087" }}
+              tick={{ fontSize: 10, fill: "#98a087" }}
               dy={10}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 8, fill: "#a0a88f" }}
+              tick={{ fontSize: 10, fill: "#a0a88f" }}
               tickFormatter={(v) => (v >= 1000 ? `${v / 1000}k` : v)}
             />
             <Tooltip

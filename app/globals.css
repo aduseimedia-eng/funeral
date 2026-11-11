@@ -3414,3 +3414,74 @@ body {
     font-size: 21px;
   }
 }
+
+/* Dashboard overview: retain useful density without forcing the eye to strain. */
+.workspace-label {
+  font-size: 10px;
+}
+.sidebar-nav a {
+  font-size: 13px;
+}
+.sidebar-help strong,
+.sidebar-bottom > .text-link {
+  font-size: 12px;
+}
+.sidebar-help p,
+.sidebar-help a {
+  font-size: 11px;
+}
+.dash-header-title,
+.dash-header-actions select,
+.dash-user strong {
+  font-size: 12px !important;
+}
+.dash-user small {
+  font-size: 11px !important;
+}
+.dash-title p,
+.dash-title .btn,
+.dash-banner p,
+.dash-banner > a,
+.stat-top {
+  font-size: 12px !important;
+}
+.stat-foot,
+.panel-header p,
+.panel-header a,
+.panel-header button,
+.panel-header select,
+.chart-legend,
+.fundraising-target,
+.fundraising-meta,
+.fundraising-box strong,
+.fundraising-box p {
+  font-size: 11px !important;
+}
+.panel-header h2 {
+  font-size: 15px;
+}
+.data-table th {
+  font-size: 11px !important;
+}
+.data-table td,
+.data-table td strong,
+.pagination,
+.table-toolbar input,
+.table-toolbar select {
+  font-size: 12px !important;
+}
+.data-table td small,
+.table-avatar {
+  font-size: 10px !important;
+}
+@media (max-width: 640px) {
+  .sidebar-nav a {
+    font-size: 12px;
+  }
+  .dash-title p,
+  .dash-banner p,
+  .stat-top,
+  .data-table td {
+    font-size: 11px !important;
+  }
+}
