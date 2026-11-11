@@ -28,8 +28,8 @@ export default function Home() {
         <section className="hero hero-full">
           <img
             className="hero-remembrance-art"
-            src="/images/hero-community-v3.png"
-            alt="Ghanaian family members sharing a quiet moment of support"
+            src="/images/hero-community-v4.png"
+            alt="Ghanaian family members walking together in quiet support"
           />
           <div className="hero-statement">
             <div className="eyebrow hero-eyebrow">

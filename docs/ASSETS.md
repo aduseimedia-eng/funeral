@@ -22,3 +22,9 @@ Typography uses Inter through Google Fonts. Icons use Lucide React. The small fl
 - File: `public/images/hero-community-v3.png`
 - Created with built-in ImageGen for the homepage hero.
 - Prompt: Dignified editorial photo of three Ghanaian adults in black funeral attire sharing a quiet supportive moment in a warm evening courtyard; black drapery, subtle black-and-gold kente, lantern light, dark negative space across the left for hero copy; no text, logos, watermark, coffins, or melodrama.
+
+
+## Hero background v4
+- File: `public/images/hero-community-v4.png`
+- Created with built-in ImageGen for the homepage hero.
+- Prompt: A photorealistic rear-view scene of three Ghanaian family members in elegant black funeral attire walking together at an evening gathering, with a supportive hand on a shoulder, warm lanterns, black drapery, a subtle black-and-gold kente detail, and dark left-side negative space. No faces visible, text, logo, watermark, or exaggerated grief.
