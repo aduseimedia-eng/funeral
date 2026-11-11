@@ -3211,6 +3211,241 @@ select:focus {
     padding: 12px 16px;
   }
 }
+
+/* Homepage hero: a framed memorial composition with the floral still-life as its setting. */
+.hero.hero-full {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 348px;
+  gap: clamp(42px, 8vw, 130px);
+  min-height: min(760px, calc(100svh - 70px));
+  padding: clamp(86px, 11vh, 130px) max(44px, calc((100vw - 1160px) / 2)) 112px;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero.hero-full::before {
+  background:
+    linear-gradient(90deg, #090807 0%, #0b0908f6 34%, #0b0908ad 56%, #0b090818 82%),
+    linear-gradient(0deg, #0a0807b5 0%, transparent 36%);
+}
+.hero-statement {
+  position: relative;
+  z-index: 2;
+  max-width: 630px;
+  padding-left: 24px;
+  border-left: 1px solid #d4ae6255;
+}
+.hero-statement::before {
+  position: absolute;
+  top: 0;
+  left: -3px;
+  width: 5px;
+  height: 52px;
+  border-radius: 99px;
+  background: #d4ae62;
+  box-shadow: 0 0 26px #d4ae62aa;
+  content: "";
+}
+.hero-statement .hero-eyebrow {
+  margin: 5px 0 27px;
+  color: #e8c980;
+  font-size: 11px !important;
+  letter-spacing: .14em !important;
+}
+.hero-statement h1 {
+  max-width: 620px;
+  margin: 0;
+  color: #fffaf0;
+  font-size: clamp(58px, 6.1vw, 90px);
+  font-weight: 600;
+  line-height: .97;
+  letter-spacing: -.07em;
+}
+.hero-statement h1 em {
+  color: #e3bd70;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -.055em;
+}
+.hero-statement > p {
+  max-width: 490px;
+  margin: 29px 0 0;
+  color: #e4dac9;
+  font-size: 17px !important;
+  line-height: 1.75;
+}
+.hero-statement .hero-actions {
+  margin-top: 34px;
+}
+.hero-statement .hero-actions .btn {
+  min-height: 53px;
+  padding-inline: 24px;
+  background: #d5a94e;
+  border-color: #d5a94e;
+  color: #17110a;
+  font-size: 14px;
+  font-weight: 700;
+}
+.hero-explore {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 0;
+  color: #f2e9d9;
+  border-bottom: 1px solid #d4ae627d;
+  font-size: 14px;
+  font-weight: 650;
+}
+.hero-remembrance-card {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  width: 100%;
+  padding: 31px 30px 27px;
+  border: 1px solid #e7c97966;
+  border-radius: 8px 8px 58px 8px;
+  background: linear-gradient(145deg, #201a12eb, #100e0bdf);
+  box-shadow: 0 27px 60px #00000065, inset 0 1px #fff3cf1c;
+  backdrop-filter: blur(13px);
+  color: #fff9ed;
+}
+.hero-remembrance-card::after {
+  position: absolute;
+  inset: 10px;
+  border: 1px solid #e7c97921;
+  border-radius: 4px 4px 49px 4px;
+  pointer-events: none;
+  content: "";
+}
+.hero-card-flower {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 47px;
+  height: 47px;
+  place-items: center;
+  border: 1px solid #d7ad5e83;
+  border-radius: 50%;
+  color: #e1ba6d;
+}
+.hero-card-kicker {
+  position: relative;
+  z-index: 1;
+  margin: 25px 0 9px;
+  color: #e1ba6d;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.hero-remembrance-card h2 {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #fff8e9;
+  font-size: 30px;
+  font-weight: 550;
+  letter-spacing: -.045em;
+  line-height: 1.08;
+}
+.hero-card-rule {
+  position: relative;
+  z-index: 1;
+  width: 46px;
+  height: 1px;
+  margin: 21px 0 16px;
+  background: #d5a94e;
+}
+.hero-card-copy {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: #dacdb8;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.hero-card-points {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  margin-top: 23px;
+  padding-top: 19px;
+  border-top: 1px solid #e7c9792b;
+  color: #f3ebdc;
+  font-size: 12px;
+}
+.hero-card-points span,
+.hero-card-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hero-card-points svg,
+.hero-card-link {
+  color: #e0b968;
+}
+.hero-card-link {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  margin-top: 23px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #d4ae625b;
+  font-size: 12px;
+  font-weight: 700;
+}
+.hero-full-footer {
+  z-index: 3;
+  right: max(44px, calc((100vw - 1160px) / 2));
+  left: max(44px, calc((100vw - 1160px) / 2));
+  padding-top: 17px;
+  border-top: 1px solid #e7c97938;
+  color: #d9c8a7;
+}
+.hero-full-footer a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+@media (max-width: 860px) {
+  .hero.hero-full {
+    grid-template-columns: minmax(0, 1fr) 304px;
+    gap: 38px;
+    padding-inline: 36px;
+  }
+  .hero-statement h1 { font-size: clamp(52px, 7.4vw, 72px); }
+  .hero-remembrance-card { padding: 27px 25px 24px; }
+  .hero-remembrance-card h2 { font-size: 26px; }
+}
+@media (max-width: 640px) {
+  .hero.hero-full {
+    display: block;
+    min-height: 785px;
+    padding: 74px 25px 142px;
+  }
+  .hero.hero-full::before {
+    background: linear-gradient(90deg, #090807f7 0%, #0b0908da 66%, #0b090836 100%), linear-gradient(0deg, #0a0807cc 0%, transparent 44%);
+  }
+  .hero-statement { max-width: 500px; padding-left: 18px; }
+  .hero-statement .hero-eyebrow { font-size: 9px !important; line-height: 1.45; }
+  .hero-statement h1 { font-size: clamp(48px, 13vw, 66px); }
+  .hero-statement > p { max-width: 340px; font-size: 15px !important; }
+  .hero-statement .hero-actions { gap: 17px; }
+  .hero-remembrance-card {
+    width: min(100%, 365px);
+    margin: 44px 0 0 auto;
+    padding: 22px 21px 20px;
+    border-radius: 6px 6px 44px 6px;
+  }
+  .hero-card-flower { width: 39px; height: 39px; }
+  .hero-card-kicker { margin-top: 16px; font-size: 9px; }
+  .hero-remembrance-card h2 { font-size: 24px; }
+  .hero-card-copy { font-size: 13px; }
+  .hero-card-points { display: none; }
+  .hero-card-link { margin-top: 17px; }
+  .hero-full-footer { right: 25px; bottom: 23px; left: 25px; }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

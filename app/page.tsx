@@ -36,43 +36,48 @@ export default function Home() {
             src="/images/hero-remembrance-v2.png"
             alt="White flowers and candlelight arranged with Ghanaian woven cloth"
           />
-          <div className="hero-copy">
+          <div className="hero-statement">
             <div className="eyebrow hero-eyebrow">
-              <Flower2 size={18} strokeWidth={1.5} /> A place to remember. A
-              community ready to help.
+              <Flower2 size={17} strokeWidth={1.5} /> Ghanaian remembrance,
+              thoughtfully held
             </div>
             <h1>
-              A life remembered.
+              Keep their story
               <br />
-              <em>A family held.</em>
+              <em>close to heart.</em>
             </h1>
             <p>
-              Bring together the stories, people, and practical support that
-              matter when a loved one is being honoured.
+              A graceful home for a life remembered, and a simple way for every
+              person who cares to stand with the family.
             </p>
             <div className="hero-actions">
               <Link
                 href="/dashboard/family/campaigns/?create=1"
                 className="btn"
               >
-                Create a funeral page <ArrowUpRight size={18} />
+                Create a memorial <ArrowUpRight size={18} />
               </Link>
-              <Link href="/campaigns/" className="text-link">
+              <Link href="/campaigns/" className="hero-explore">
                 Explore memorials <ArrowRight size={17} />
               </Link>
             </div>
-            <div className="hero-trust">
-              <span>
-                <ShieldCheck size={17} />
-                One clear contribution record
-              </span>
-              <span>
-                <Globe2 size={16} />
-                Together, wherever you are
-              </span>
-            </div>
-            <p className="hero-tribute">In memory. In community. In every gesture.</p>
           </div>
+          <aside className="hero-remembrance-card" aria-label="What Nsaabɔdeɛ offers">
+            <div className="hero-card-flower"><Flower2 size={28} strokeWidth={1.1} /></div>
+            <p className="hero-card-kicker">A shared gesture of care</p>
+            <h2>One beautiful place to gather.</h2>
+            <div className="hero-card-rule" />
+            <p className="hero-card-copy">
+              Share the details. Welcome messages and support. Keep every gesture together.
+            </p>
+            <div className="hero-card-points">
+              <span><ShieldCheck size={16} /> Clear contribution records</span>
+              <span><Globe2 size={16} /> Family and friends, anywhere</span>
+            </div>
+            <Link href="/about/" className="hero-card-link">
+              Our story <ArrowUpRight size={16} />
+            </Link>
+          </aside>
           <div className="hero-visual hero-memorial-stage">
             <div className="hero-orbit hero-orbit-one" />
             <div className="hero-orbit hero-orbit-two" />
