@@ -42,6 +42,9 @@ export function Navbar() {
             className={open ? "nav-links open" : "nav-links"}
             aria-label="Main navigation"
           >
+            <Link onClick={() => setOpen(false)} href="/">
+              Home
+            </Link>
             <Link onClick={() => setOpen(false)} href="/campaigns/">
               Explore memorials
             </Link>
