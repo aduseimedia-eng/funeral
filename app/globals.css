@@ -3860,6 +3860,103 @@ body:has(.hero-full) .nav-actions .btn {
   }
 }
 
+/* Fixed liquid navigation shell. */
+.demo-strip {
+  position: fixed;
+  z-index: 101;
+  inset: 0 0 auto;
+  min-height: 32px;
+  padding-block: 7px;
+  background: #0b0908 !important;
+  color: #ead9b5;
+}
+.navbar {
+  position: fixed;
+  z-index: 100;
+  top: 42px;
+  left: 50%;
+  width: min(calc(100% - 32px), 1200px);
+  overflow: visible;
+  transform: translateX(-50%);
+  border: 1px solid #e0bd7254;
+  border-radius: 30px 30px 48px 48px / 30px 30px 25px 25px;
+  background: #15120fe8 !important;
+  box-shadow: 0 16px 42px #00000038, inset 0 1px #fff6dc14;
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  color: #fbf4e5;
+}
+.navbar::before,
+.navbar::after {
+  position: absolute;
+  z-index: -1;
+  top: 11px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #c79a4321;
+  filter: blur(10px);
+  content: "";
+}
+.navbar::before {
+  left: 18%;
+}
+.navbar::after {
+  right: 15%;
+}
+.navbar .nav-inner {
+  width: 100%;
+  height: 76px;
+  max-width: none;
+  padding: 0 26px;
+}
+.navbar .logo,
+.navbar .desktop-login,
+.navbar .nav-links a,
+.navbar .mobile-menu {
+  color: #fbf4e5;
+}
+.navbar .logo-caption {
+  color: #d9c8a7;
+}
+.navbar .nav-links a:hover,
+.navbar .desktop-login:hover {
+  color: #e0bd72;
+}
+.navbar .nav-actions .btn {
+  border-color: #c79a43;
+  background: #c79a43;
+  color: #15120f;
+  box-shadow: 0 7px 18px #00000030;
+}
+.navbar-spacer {
+  height: 128px;
+}
+@media (max-width: 768px) {
+  .navbar {
+    top: 38px;
+    width: calc(100% - 20px);
+    border-radius: 25px 25px 36px 36px / 25px 25px 22px 22px;
+  }
+  .navbar .nav-inner {
+    height: 68px;
+    padding: 0 16px;
+  }
+  .navbar .nav-links {
+    top: 82px;
+    border: 1px solid #e0bd723d;
+    border-radius: 22px 22px 30px 30px;
+    background: #15120ff5;
+    box-shadow: 0 18px 35px #00000036;
+  }
+  .navbar .nav-links.open {
+    top: 82px;
+  }
+  .navbar-spacer {
+    height: 116px;
+  }
+}
+
 /* Black and gold visual system. */
 .demo-strip,
 .support-art,

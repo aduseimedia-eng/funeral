@@ -80,6 +80,7 @@ export function Navbar() {
           </div>
         </div>
       </header>
+      <div className="navbar-spacer" aria-hidden="true" />
     </>
   );
 }
