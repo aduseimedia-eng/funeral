@@ -31,19 +31,24 @@ export default function Home() {
       <Navbar />
       <main>
         <section className="hero container">
+          <img
+            className="hero-remembrance-art"
+            src="/images/hero-remembrance-v2.png"
+            alt="White flowers and candlelight arranged with Ghanaian woven cloth"
+          />
           <div className="hero-copy">
             <div className="eyebrow hero-eyebrow">
-              <Flower2 size={18} strokeWidth={1.5} /> A place to remember. A way
-              to stand together.
+              <Flower2 size={18} strokeWidth={1.5} /> A place to remember. A
+              community ready to help.
             </div>
             <h1>
-              When a family needs
+              A life remembered.
               <br />
-              <em>each other.</em>
+              <em>A family held.</em>
             </h1>
             <p>
-              Create a beautiful memorial, share funeral details, and bring
-              every gesture of support into one thoughtful place.
+              Bring together the stories, people, and practical support that
+              matter when a loved one is being honoured.
             </p>
             <div className="hero-actions">
               <Link
@@ -59,13 +64,14 @@ export default function Home() {
             <div className="hero-trust">
               <span>
                 <ShieldCheck size={17} />
-                Clear contribution records
+                One clear contribution record
               </span>
               <span>
                 <Globe2 size={16} />
-                Family and friends, anywhere
+                Together, wherever you are
               </span>
             </div>
+            <p className="hero-tribute">In memory. In community. In every gesture.</p>
           </div>
           <div className="hero-visual hero-memorial-stage">
             <div className="hero-orbit hero-orbit-one" />
