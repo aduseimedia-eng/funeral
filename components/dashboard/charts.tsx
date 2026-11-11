@@ -1,0 +1,211 @@
+"use client";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+  PieChart,
+  Pie,
+  Cell,
+  BarChart,
+  Bar,
+} from "recharts";
+import { Contribution } from "@/lib/types";
+import { money } from "@/lib/utils";
+export function AnalyticsChart({
+  rows,
+  kind = "timeline",
+  days = 30,
+}: {
+  rows: Contribution[];
+  kind?: "timeline" | "methods" | "distribution" | "activity";
+  days?: number;
+}) {
+  const verified = rows.filter((c) => c.status === "Verified");
+  const maxDate = Math.max(
+    new Date("2026-11-11").getTime(),
+    ...rows.map((c) => new Date(c.date).getTime()),
+  );
+  const endDay =
+    new Date(new Date(maxDate).toISOString().slice(0, 10)).getTime() + 86400000;
+  const filtered = verified.filter((c) => {
+    const time = new Date(c.date).getTime();
+    return time >= endDay - days * 86400000 && time < endDay;
+  });
+  const timeline = Array.from({ length: days === 7 ? 7 : 10 }, (_, i) => {
+    const d = new Date(maxDate - (days === 7 ? 6 - i : 27 - i * 3) * 86400000);
+    const end = new Date(d.toISOString().slice(0, 10)).getTime() + 86400000;
+    const start = end - (days === 7 ? 1 : 3) * 86400000;
+    const rs = filtered.filter((c) => {
+      const time = new Date(c.date).getTime();
+      return time >= start && time < end;
+    });
+    return {
+      name: d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }),
+      digital: rs
+        .filter((c) => c.method !== "Cash")
+        .reduce((s, c) => s + c.amount, 0),
+      cash: rs
+        .filter((c) => c.method === "Cash")
+        .reduce((s, c) => s + c.amount, 0),
+      count: rs.length,
+    };
+  });
+  const methods = [
+    {
+      name: "Digital",
+      value: filtered
+        .filter((c) => c.method !== "Cash")
+        .reduce((s, c) => s + c.amount, 0),
+    },
+    {
+      name: "Cash",
+      value: filtered
+        .filter((c) => c.method === "Cash")
+        .reduce((s, c) => s + c.amount, 0),
+    },
+  ];
+  const bins = [
+    { name: "Under 200", value: filtered.filter((c) => c.amount < 200).length },
+    {
+      name: "200–500",
+      value: filtered.filter((c) => c.amount >= 200 && c.amount <= 500).length,
+    },
+    {
+      name: "501–1,000",
+      value: filtered.filter((c) => c.amount > 500 && c.amount <= 1000).length,
+    },
+    {
+      name: "Over 1,000",
+      value: filtered.filter((c) => c.amount > 1000).length,
+    },
+  ];
+  return (
+    <div className="chart-wrap">
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+        minWidth={0}
+        minHeight={150}
+      >
+        {kind === "methods" ? (
+          <PieChart>
+            <Pie
+              data={methods}
+              dataKey="value"
+              nameKey="name"
+              innerRadius={55}
+              outerRadius={80}
+              paddingAngle={5}
+            >
+              {methods.map((_, i) => (
+                <Cell key={i} fill={i ? "#c4ae7e" : "#87976b"} />
+              ))}
+            </Pie>
+            <Tooltip formatter={(v) => money(Number(v))} />
+          </PieChart>
+        ) : kind === "distribution" ? (
+          <BarChart data={bins}>
+            <CartesianGrid stroke="#eff0e8" vertical={false} />
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 8, fill: "#929b85" }}
+            />
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 8, fill: "#a0a98f" }}
+              allowDecimals={false}
+            />
+            <Tooltip />
+            <Bar
+              dataKey="value"
+              name="Contributions"
+              fill="#9aa77b"
+              radius={[3, 3, 0, 0]}
+            />
+          </BarChart>
+        ) : kind === "activity" ? (
+          <BarChart data={timeline}>
+            <CartesianGrid stroke="#eff0e8" vertical={false} />
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 8, fill: "#929b85" }}
+            />
+            <YAxis
+              allowDecimals={false}
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 8 }}
+            />
+            <Tooltip />
+            <Bar
+              dataKey="count"
+              name="Contributions"
+              fill="#b8a275"
+              radius={[3, 3, 0, 0]}
+            />
+          </BarChart>
+        ) : (
+          <AreaChart
+            data={timeline}
+            margin={{ top: 10, right: 8, left: -20, bottom: 0 }}
+          >
+            <defs>
+              <linearGradient id="digital-fill" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor="#a9b58a" stopOpacity={0.3} />
+                <stop offset="1" stopColor="#a9b58a" stopOpacity={0.01} />
+              </linearGradient>
+            </defs>
+            <CartesianGrid stroke="#edf0e5" vertical={false} />
+            <XAxis
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 8, fill: "#98a087" }}
+              dy={10}
+            />
+            <YAxis
+              axisLine={false}
+              tickLine={false}
+              tick={{ fontSize: 8, fill: "#a0a88f" }}
+              tickFormatter={(v) => (v >= 1000 ? `${v / 1000}k` : v)}
+            />
+            <Tooltip
+              formatter={(v) => money(Number(v))}
+              contentStyle={{
+                fontSize: 10,
+                borderColor: "#e2e6d8",
+                borderRadius: 5,
+              }}
+            />
+            <Area
+              type="monotone"
+              dataKey="digital"
+              name="Digital"
+              stroke="#8c9a70"
+              fill="url(#digital-fill)"
+              strokeWidth={2}
+            />
+            <Area
+              type="monotone"
+              dataKey="cash"
+              name="Cash"
+              stroke="#c1ab77"
+              fill="transparent"
+              strokeWidth={1.5}
+              strokeDasharray="4 4"
+            />
+          </AreaChart>
+        )}
+      </ResponsiveContainer>
+    </div>
+  );
+}

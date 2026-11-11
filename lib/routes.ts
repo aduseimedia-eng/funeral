@@ -1,0 +1,25 @@
+export const dashboardRoutes = {
+  family: [
+    "",
+    "campaigns",
+    "contributions",
+    "donors",
+    "qr",
+    "mc",
+    "administrators",
+    "reports",
+    "withdrawals",
+    "settings",
+  ],
+  donor: ["", "history", "preferences", "settings"],
+  mc: ["", "campaigns", "announced", "settings"],
+  admin: [
+    "",
+    "users",
+    "campaigns",
+    "transactions",
+    "reports",
+    "audit",
+    "settings",
+  ],
+} as const;
