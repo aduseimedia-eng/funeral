@@ -4554,3 +4554,111 @@ body:has(.hero-full) .nav-actions .btn {
     font-size: 15px !important;
   }
 }
+
+/* Site-wide content scale: comfortable reading on every screen. */
+body {
+  font-size: 16px;
+  line-height: 1.72;
+}
+.navbar .nav-links a,
+.navbar .desktop-login,
+.navbar .nav-actions .btn {
+  font-size: 15px !important;
+}
+main p:not(.hero-minimal-line) {
+  font-size: 16px !important;
+  line-height: 1.72;
+}
+main .eyebrow,
+main .campaign-body .eyebrow,
+main .campaign-foot,
+main .demo-caption,
+main .benefit > span,
+main .qr-section .qr-points,
+main .closing-cta small {
+  font-size: 12px !important;
+}
+main .btn,
+main .text-link,
+main .values-strip span,
+main .faqs summary {
+  font-size: 15px !important;
+}
+main .step h3,
+main .campaign-body h3,
+main .benefit h3,
+main .trust-grid h3 {
+  font-size: 20px;
+}
+main .campaign-amount,
+main .campaign-foot,
+main .qr-poster-mini p {
+  font-size: 14px !important;
+}
+.footer p,
+.footer .small,
+.footer-grid > div > a:not(.logo),
+.footer-bottom {
+  font-size: 14px !important;
+}
+.footer h4 {
+  font-size: 13px !important;
+}
+.dashboard {
+  font-size: 15px;
+}
+.dashboard p,
+.dashboard .dash-title p,
+.dashboard .dash-banner p,
+.dashboard .panel-header p,
+.dashboard .fundraising-box p,
+.dashboard .quick-card p,
+.dashboard .data-table td,
+.dashboard .data-table td strong,
+.dashboard .data-table td small,
+.dashboard .pagination,
+.dashboard .table-toolbar input,
+.dashboard .table-toolbar select {
+  font-size: 14px !important;
+}
+.dashboard .dash-header-title,
+.dashboard .dash-header-actions select,
+.dashboard .dash-user strong,
+.dashboard .dash-title .btn,
+.dashboard .dash-banner > a,
+.dashboard .stat-top,
+.dashboard .stat-foot,
+.dashboard .panel-header a,
+.dashboard .panel-header button,
+.dashboard .panel-header select,
+.dashboard .chart-legend,
+.dashboard .fundraising-target,
+.dashboard .dash-section-label,
+.dashboard .quick-card strong,
+.dashboard .qr-controls .btn,
+.dashboard .note-text,
+.dashboard .read-only-note {
+  font-size: 14px !important;
+}
+.dashboard .data-table th,
+.dashboard .workspace-label,
+.dashboard .sidebar-help p,
+.dashboard .sidebar-help a {
+  font-size: 12px !important;
+}
+.dashboard .sidebar-nav a,
+.dashboard .sidebar-help strong,
+.dashboard .sidebar-bottom > .text-link {
+  font-size: 14px;
+}
+@media (max-width: 640px) {
+  main p:not(.hero-minimal-line) { font-size: 15px !important; }
+  main .btn,
+  main .text-link,
+  main .values-strip span,
+  main .faqs summary { font-size: 14px !important; }
+  .dashboard p,
+  .dashboard .data-table td,
+  .dashboard .data-table td strong,
+  .dashboard .data-table td small { font-size: 13px !important; }
+}
