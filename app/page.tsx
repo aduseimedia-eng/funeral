@@ -19,13 +19,8 @@ import {
   CheckLine,
 } from "@/components/common/ui";
 import { useDemo } from "@/components/providers";
-import { money, totalFor } from "@/lib/utils";
 export default function Home() {
   const { state } = useDemo();
-  const heroCampaign =
-    state.campaigns.find((campaign) => campaign.id === "kwasi-mensah") ??
-    state.campaigns[0];
-  const heroTotal = totalFor(state.contributions, heroCampaign?.id);
   return (
     <>
       <Navbar />
@@ -60,60 +55,6 @@ export default function Home() {
               <Link href="/campaigns/" className="hero-explore">
                 Explore memorials <ArrowRight size={17} />
               </Link>
-            </div>
-          </div>
-          <aside className="hero-remembrance-card" aria-label="What Nsaabɔdeɛ offers">
-            <div className="hero-card-flower"><Flower2 size={28} strokeWidth={1.1} /></div>
-            <p className="hero-card-kicker">A shared gesture of care</p>
-            <h2>One beautiful place to gather.</h2>
-            <div className="hero-card-rule" />
-            <p className="hero-card-copy">
-              Share the details. Welcome messages and support. Keep every gesture together.
-            </p>
-            <div className="hero-card-points">
-              <span><ShieldCheck size={16} /> Clear contribution records</span>
-              <span><Globe2 size={16} /> Family and friends, anywhere</span>
-            </div>
-            <Link href="/about/" className="hero-card-link">
-              Our story <ArrowUpRight size={16} />
-            </Link>
-          </aside>
-          <div className="hero-visual hero-memorial-stage">
-            <div className="hero-orbit hero-orbit-one" />
-            <div className="hero-orbit hero-orbit-two" />
-            <div className="hero-memory-card">
-              <div className="hero-memory-image">
-                <img
-                  src={heroCampaign?.image ?? "/images/kwasi-portrait.png"}
-                  alt={`Portrait of ${heroCampaign?.name ?? "Nana Kwasi Mensah"}`}
-                />
-                <span>IN LOVING MEMORY</span>
-              </div>
-              <div className="hero-memory-copy">
-                <p>{heroCampaign?.location ?? "Kumasi, Ghana"}</p>
-                <h2>{heroCampaign?.name ?? "Nana Kwasi Mensah"}</h2>
-                <span>{heroCampaign?.years ?? "1948 — 2026"}</span>
-                <div className="hero-card-progress">
-                  <div>
-                    <span>Community support</span>
-                    <strong>{money(heroTotal)}</strong>
-                  </div>
-                  <div className="hero-progress-line">
-                    <span
-                      style={{
-                        width: `${Math.min(
-                          100,
-                          Math.round((heroTotal / (heroCampaign?.target ?? 1)) * 100),
-                        )}%`,
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="hero-side-note">
-              <Heart size={18} fill="currentColor" />
-              <span>Every contribution is a way of saying, “we are with you.”</span>
             </div>
           </div>
           <div className="hero-full-footer" aria-label="Hero highlights">

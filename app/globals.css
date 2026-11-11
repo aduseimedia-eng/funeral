@@ -3215,8 +3215,8 @@ select:focus {
 /* Homepage hero: a framed memorial composition with the floral still-life as its setting. */
 .hero.hero-full {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 348px;
-  gap: clamp(42px, 8vw, 130px);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
   min-height: min(760px, calc(100svh - 70px));
   padding: clamp(86px, 11vh, 130px) max(44px, calc((100vw - 1160px) / 2)) 112px;
   align-items: center;
