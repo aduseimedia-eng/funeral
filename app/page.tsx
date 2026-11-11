@@ -33,34 +33,34 @@ export default function Home() {
           />
           <div className="hero-statement">
             <div className="eyebrow hero-eyebrow">
-              <Flower2 size={17} strokeWidth={1.5} /> Ghanaian remembrance,
-              thoughtfully held
+              <Flower2 size={16} strokeWidth={1.5} /> Nsaabɔdeɛ · Ghanaian
+              remembrance
             </div>
             <h1>
-              Keep their story
+              A place to
               <br />
-              <em>close to heart.</em>
+              <em>remember together.</em>
             </h1>
             <p>
-              A graceful home for a life remembered, and a simple way for every
-              person who cares to stand with the family.
+              Share a life. Keep the details close. Let every person who cares
+              show up for the family.
             </p>
             <div className="hero-actions">
               <Link
                 href="/dashboard/family/campaigns/?create=1"
                 className="btn"
               >
-                Create a memorial <ArrowUpRight size={18} />
+                Create a funeral page <ArrowUpRight size={18} />
               </Link>
               <Link href="/campaigns/" className="hero-explore">
-                Explore memorials <ArrowRight size={17} />
+                View memorials <ArrowRight size={17} />
               </Link>
             </div>
           </div>
           <div className="hero-full-footer" aria-label="Hero highlights">
-            <span>Rooted in Ghanaian tradition</span>
-            <span>Made for families, near and far</span>
-            <a href="#how-it-works">Scroll to explore ↓</a>
+            <span>For families in Ghana</span>
+            <span>For loved ones everywhere</span>
+            <a href="#how-it-works">How it works <ArrowRight size={15} /></a>
           </div>
         </section>
         <section className="values-strip">

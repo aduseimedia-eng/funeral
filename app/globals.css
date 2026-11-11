@@ -3212,6 +3212,80 @@ select:focus {
   }
 }
 
+/* Final homepage hero copy treatment. */
+.hero.hero-full .hero-statement {
+  max-width: 580px;
+  padding-left: 22px;
+  border-left-color: #d9b35e66;
+}
+.hero.hero-full .hero-statement::before {
+  height: 42px;
+  background: #deb866;
+  box-shadow: 0 0 20px #d4ae6270;
+}
+.hero.hero-full .hero-eyebrow {
+  margin-bottom: 22px;
+  color: #eacb85;
+  font-size: 10px !important;
+  font-weight: 700;
+  letter-spacing: .13em !important;
+}
+.hero.hero-full .hero-statement h1 {
+  max-width: 580px;
+  color: #fffaf0;
+  font-family: var(--font-display);
+  font-size: clamp(58px, 6.4vw, 88px);
+  font-weight: 700;
+  line-height: .94;
+  letter-spacing: -.068em;
+  text-shadow: 0 4px 22px #0000004d;
+}
+.hero.hero-full .hero-statement h1 em {
+  color: #e3bd70;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -.065em;
+}
+.hero.hero-full .hero-statement > p {
+  max-width: 430px;
+  margin-top: 27px;
+  color: #e8dfcf;
+  font-size: 16px !important;
+  line-height: 1.72;
+}
+.hero.hero-full .hero-actions {
+  margin-top: 31px;
+}
+.hero.hero-full .hero-actions .btn {
+  min-height: 50px;
+  padding-inline: 21px;
+  border-radius: 15px 15px 22px 15px;
+  box-shadow: 0 12px 28px #0000003d;
+}
+.hero.hero-full .hero-explore {
+  color: #f1e7d7;
+  font-size: 13px;
+}
+.hero.hero-full .hero-full-footer {
+  color: #d8c8aa;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .08em;
+}
+.hero.hero-full .hero-full-footer a {
+  color: #edc878;
+  font-size: 11px;
+  letter-spacing: .02em;
+  text-transform: none;
+}
+@media (max-width: 640px) {
+  .hero.hero-full .hero-statement { padding-left: 18px; }
+  .hero.hero-full .hero-statement h1 { font-size: clamp(47px, 12.5vw, 64px); }
+  .hero.hero-full .hero-statement > p { max-width: 335px; font-size: 15px !important; }
+  .hero.hero-full .hero-full-footer { font-size: 9px; letter-spacing: .04em; }
+}
+
 /* Homepage hero: a framed memorial composition with the floral still-life as its setting. */
 .hero.hero-full {
   display: grid;
