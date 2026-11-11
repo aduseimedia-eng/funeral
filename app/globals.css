@@ -3267,6 +3267,114 @@ select:focus {
 .auth-form h1 {
   line-height: 1.1;
 }
+
+/* A readable baseline for captions, controls, and supporting information. */
+body {
+  font-size: 15px;
+  line-height: 1.7;
+}
+.demo-strip,
+.logo-caption,
+.nav-links a,
+.desktop-login,
+.btn,
+.text-link,
+.eyebrow,
+.hero-eyebrow,
+.visual-top span,
+.floating-note div > span,
+.campaign-body .eyebrow,
+.years,
+.campaign-amount,
+.campaign-foot,
+.demo-caption,
+.benefit > span,
+.qr-section .qr-points,
+.qr-poster-mini > span,
+.qr-poster-mini p,
+.closing-cta small,
+.footer p,
+.footer .small,
+.footer h4,
+.footer-bottom {
+  font-size: 11px !important;
+}
+.section-head > p,
+.step p,
+.support-copy > p,
+.benefit p,
+.qr-section p,
+.trust-grid p,
+.faq-section > div > p,
+.faqs details,
+.faqs details p,
+.closing-cta p,
+.memorial-header p,
+.memorial-content > p,
+.fund-card > .small,
+.condolence strong,
+.condolence p,
+.checkout-top p,
+.checkout-card > p,
+.choice-row,
+.choice-row small,
+.result-card p,
+.auth-form > p,
+.auth-form .small,
+.empty-state p {
+  font-size: 13px !important;
+}
+.dash-header-title,
+.dash-header-actions select,
+.dash-user strong,
+.dash-user small,
+.dash-title p,
+.dash-title .btn,
+.dash-banner p,
+.dash-banner > a,
+.stat-top,
+.stat-foot,
+.panel-header p,
+.panel-header button,
+.panel-header select,
+.chart-legend,
+.fundraising-target,
+.fundraising-box p,
+.data-table td,
+.data-table td small,
+.table-toolbar select,
+.dash-section-label,
+.quick-card strong,
+.quick-card p,
+.qr-controls .btn,
+.note-text,
+.read-only-note,
+.family-campaign-select,
+.family-campaign-select select {
+  font-size: 11px !important;
+}
+.data-table th {
+  font-size: 10px !important;
+}
+@media (max-width: 640px) {
+  .hero-eyebrow,
+  .eyebrow,
+  .campaign-body .eyebrow,
+  .memorial-header .eyebrow,
+  .checkout-step,
+  .demo-strip,
+  .footer-bottom {
+    font-size: 10px !important;
+  }
+  .hero-copy > p,
+  .section-head > p,
+  .page-hero p,
+  .memorial-header p,
+  .dash-title p,
+  .dash-banner p {
+    font-size: 12px !important;
+  }
+}
 @media (max-width: 640px) {
   .hero h1 {
     font-size: clamp(36px, 11.3vw, 60px);
@@ -3287,14 +3395,14 @@ select:focus {
     width: 21px;
   }
   .nav-inner .logo-caption {
-    font-size: 4.5px;
+    font-size: 6px;
     letter-spacing: 1px;
   }
   .nav-actions {
     gap: 9px;
   }
   .nav-actions .btn {
-    font-size: 8px;
+    font-size: 9px;
     padding: 10px 9px;
     gap: 6px;
   }
