@@ -30,7 +30,7 @@ export default function Home() {
     <>
       <Navbar />
       <main>
-        <section className="hero container">
+        <section className="hero hero-full">
           <img
             className="hero-remembrance-art"
             src="/images/hero-remembrance-v2.png"
@@ -110,6 +110,11 @@ export default function Home() {
               <Heart size={18} fill="currentColor" />
               <span>Every contribution is a way of saying, “we are with you.”</span>
             </div>
+          </div>
+          <div className="hero-full-footer" aria-label="Hero highlights">
+            <span>Rooted in Ghanaian tradition</span>
+            <span>Made for families, near and far</span>
+            <a href="#how-it-works">Scroll to explore ↓</a>
           </div>
         </section>
         <section className="values-strip">
