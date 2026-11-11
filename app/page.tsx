@@ -2,7 +2,6 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
-  ArrowRight,
   Heart,
   ShieldCheck,
   QrCode,
@@ -33,34 +32,14 @@ export default function Home() {
           />
           <div className="hero-statement">
             <div className="eyebrow hero-eyebrow">
-              <Flower2 size={16} strokeWidth={1.5} /> Nsaabɔdeɛ · Ghanaian
-              remembrance
+              <Flower2 size={16} strokeWidth={1.5} /> Nsaabɔdeɛ
             </div>
             <h1>
-              A place to
+              Remember.
               <br />
-              <em>remember together.</em>
+              <em>Together.</em>
             </h1>
-            <p>
-              Share a life. Keep the details close. Let every person who cares
-              show up for the family.
-            </p>
-            <div className="hero-actions">
-              <Link
-                href="/dashboard/family/campaigns/?create=1"
-                className="btn"
-              >
-                Create a funeral page <ArrowUpRight size={18} />
-              </Link>
-              <Link href="/campaigns/" className="hero-explore">
-                View memorials <ArrowRight size={17} />
-              </Link>
-            </div>
-          </div>
-          <div className="hero-full-footer" aria-label="Hero highlights">
-            <span>For families in Ghana</span>
-            <span>For loved ones everywhere</span>
-            <a href="#how-it-works">How it works <ArrowRight size={15} /></a>
+            <p className="hero-minimal-line">A quiet place for every story that matters.</p>
           </div>
         </section>
         <section className="values-strip">

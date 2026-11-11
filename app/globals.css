@@ -4499,3 +4499,58 @@ body:has(.hero-full) .nav-actions .btn {
     line-height: 1.55;
   }
 }
+
+/* Minimal typography over the homepage image. */
+.hero.hero-full .hero-statement {
+  max-width: 530px;
+  padding-left: 0;
+  border-left: 0;
+}
+.hero.hero-full .hero-statement::before {
+  display: none;
+}
+.hero.hero-full .hero-eyebrow {
+  display: inline-flex;
+  margin: 0 0 19px;
+  color: #e5bf6f;
+  font-size: 10px !important;
+  font-weight: 700;
+  letter-spacing: .19em !important;
+  text-transform: uppercase;
+}
+.hero.hero-full .hero-statement h1 {
+  margin: 0;
+  color: #fffdf8;
+  font-size: clamp(68px, 7.4vw, 104px);
+  font-weight: 700;
+  line-height: .88;
+  letter-spacing: -.08em;
+  text-shadow: 0 4px 28px #00000050;
+}
+.hero.hero-full .hero-statement h1 em {
+  color: #dcb25b;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
+}
+.hero.hero-full .hero-minimal-line {
+  width: fit-content;
+  max-width: 340px;
+  margin: 30px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid #dfb7647a;
+  color: #ece3d2;
+  font-size: 14px !important;
+  font-weight: 500;
+  line-height: 1.5;
+}
+@media (max-width: 640px) {
+  .hero.hero-full .hero-statement h1 {
+    font-size: clamp(58px, 15.5vw, 76px);
+  }
+  .hero.hero-full .hero-minimal-line {
+    max-width: 270px;
+    margin-top: 25px;
+    font-size: 13px !important;
+  }
+}
