@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import {
   ArrowUpRight,
   Heart,
@@ -10,6 +11,8 @@ import {
   Flower2,
   Users,
   ChevronDown,
+  Pause,
+  Play,
 } from "lucide-react";
 import {
   Navbar,
@@ -20,11 +23,12 @@ import {
 import { useDemo } from "@/components/providers";
 export default function Home() {
   const { state } = useDemo();
+  const [heroPaused, setHeroPaused] = useState(false);
   return (
     <>
       <Navbar />
       <main>
-        <section className="hero hero-full">
+        <section className="hero hero-full" data-motion-paused={heroPaused}>
           <img
             className="hero-remembrance-art"
             src="/images/hero-community-v4.png"
@@ -41,6 +45,15 @@ export default function Home() {
             </h1>
             <p className="hero-minimal-line">A quiet place for every story that matters.</p>
           </div>
+          <button
+            type="button"
+            className="hero-motion-toggle"
+            onClick={() => setHeroPaused((paused) => !paused)}
+            aria-label={heroPaused ? "Play hero animation" : "Pause hero animation"}
+            title={heroPaused ? "Play animation" : "Pause animation"}
+          >
+            {heroPaused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}
+          </button>
         </section>
         <section className="values-strip">
           <div className="container">

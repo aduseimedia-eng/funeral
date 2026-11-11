@@ -4419,6 +4419,46 @@ body:has(.hero-full) .nav-actions .btn {
   object-position: center;
   filter: saturate(0.9) contrast(1.04);
 }
+/* Gentle image-only motion keeps the memorial copy steady. */
+@keyframes hero-image-drift {
+  from { transform: scale(1); }
+  to { transform: scale(1.055); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-full .hero-remembrance-art {
+    transform-origin: 72% 50%;
+    animation: hero-image-drift 20s ease-in-out infinite alternate;
+  }
+  .hero-full[data-motion-paused="true"] .hero-remembrance-art {
+    animation-play-state: paused;
+  }
+}
+.hero.hero-full {
+  position: relative;
+}
+.hero-motion-toggle {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid #e5bf6f66;
+  border-radius: 50%;
+  background: #15120fb3;
+  color: #f3dfb0;
+}
+.hero-motion-toggle:hover {
+  background: #302516;
+  border-color: #e5bf6f;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-full .hero-remembrance-art { animation: none; transform: none; }
+  .hero-motion-toggle { display: none; }
+}
 .hero.container::before {
   z-index: -1;
   inset: 0;
