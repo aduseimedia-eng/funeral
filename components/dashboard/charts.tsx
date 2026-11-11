@@ -102,42 +102,42 @@ export function AnalyticsChart({
               paddingAngle={5}
             >
               {methods.map((_, i) => (
-                <Cell key={i} fill={i ? "#c4ae7e" : "#87976b"} />
+                <Cell key={i} fill={i ? "#e0bd72" : "#17130f"} />
               ))}
             </Pie>
             <Tooltip formatter={(v) => money(Number(v))} />
           </PieChart>
         ) : kind === "distribution" ? (
           <BarChart data={bins}>
-            <CartesianGrid stroke="#eff0e8" vertical={false} />
+            <CartesianGrid stroke="#eee2cc" vertical={false} />
             <XAxis
               dataKey="name"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 10, fill: "#929b85" }}
+              tick={{ fontSize: 10, fill: "#766958" }}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 10, fill: "#a0a98f" }}
+              tick={{ fontSize: 10, fill: "#8b7b68" }}
               allowDecimals={false}
             />
             <Tooltip />
             <Bar
               dataKey="value"
               name="Contributions"
-              fill="#9aa77b"
+              fill="#c79a43"
               radius={[3, 3, 0, 0]}
             />
           </BarChart>
         ) : kind === "activity" ? (
           <BarChart data={timeline}>
-            <CartesianGrid stroke="#eff0e8" vertical={false} />
+            <CartesianGrid stroke="#eee2cc" vertical={false} />
             <XAxis
               dataKey="name"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 10, fill: "#929b85" }}
+              tick={{ fontSize: 10, fill: "#766958" }}
             />
             <YAxis
               allowDecimals={false}
@@ -149,7 +149,7 @@ export function AnalyticsChart({
             <Bar
               dataKey="count"
               name="Contributions"
-              fill="#b8a275"
+              fill="#c79a43"
               radius={[3, 3, 0, 0]}
             />
           </BarChart>
@@ -160,29 +160,29 @@ export function AnalyticsChart({
           >
             <defs>
               <linearGradient id="digital-fill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stopColor="#a9b58a" stopOpacity={0.3} />
-                <stop offset="1" stopColor="#a9b58a" stopOpacity={0.01} />
+                <stop offset="0" stopColor="#c79a43" stopOpacity={0.32} />
+                <stop offset="1" stopColor="#c79a43" stopOpacity={0.01} />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke="#edf0e5" vertical={false} />
+            <CartesianGrid stroke="#eee2cc" vertical={false} />
             <XAxis
               dataKey="name"
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 10, fill: "#98a087" }}
+              tick={{ fontSize: 10, fill: "#766958" }}
               dy={10}
             />
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fontSize: 10, fill: "#a0a88f" }}
+              tick={{ fontSize: 10, fill: "#8b7b68" }}
               tickFormatter={(v) => (v >= 1000 ? `${v / 1000}k` : v)}
             />
             <Tooltip
               formatter={(v) => money(Number(v))}
               contentStyle={{
                 fontSize: 10,
-                borderColor: "#e2e6d8",
+                borderColor: "#e7dcc7",
                 borderRadius: 5,
               }}
             />
@@ -190,7 +190,7 @@ export function AnalyticsChart({
               type="monotone"
               dataKey="digital"
               name="Digital"
-              stroke="#8c9a70"
+              stroke="#17130f"
               fill="url(#digital-fill)"
               strokeWidth={2}
             />
@@ -198,7 +198,7 @@ export function AnalyticsChart({
               type="monotone"
               dataKey="cash"
               name="Cash"
-              stroke="#c1ab77"
+              stroke="#c79a43"
               fill="transparent"
               strokeWidth={1.5}
               strokeDasharray="4 4"

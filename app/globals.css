@@ -1,13 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 @import "tailwindcss";
 :root {
-  --bg: #fcfbf8;
-  --ink: #272b26;
-  --muted: #77796f;
-  --gold: #a88a50;
-  --line: #e6e5dd;
-  --cream: #f2f0e8;
-  --green: #3a5745;
+  --bg: #faf7f0;
+  --ink: #15120f;
+  --muted: #6f675b;
+  --gold: #c79a43;
+  --line: #e7dcc7;
+  --cream: #f3ecdf;
+  --green: #15120f;
   --font-sans: "Inter", Arial, sans-serif;
   --font-display: "Inter", Arial, sans-serif;
 }
@@ -181,8 +181,8 @@ p {
   transition: background 0.2s;
 }
 .btn:hover {
-  background: #465341;
-  border-color: #465341;
+  background: #3b2a12;
+  border-color: #3b2a12;
 }
 .btn-small {
   padding: 12px 17px;
@@ -199,9 +199,9 @@ p {
   border-color: var(--line);
 }
 .btn-gold {
-  background: #c4aa75;
-  color: #252b24;
-  border-color: #c4aa75;
+  background: #c79a43;
+  color: #15120f;
+  border-color: #c79a43;
 }
 .btn-danger {
   background: #9b4141;
@@ -3767,4 +3767,138 @@ body {
     bottom: 0;
     width: 212px;
   }
+}
+
+/* Black and gold visual system. */
+.demo-strip,
+.support-art,
+.closing-cta,
+.footer {
+  background: #15120f;
+}
+.demo-strip,
+.closing-cta,
+.footer,
+.support-art {
+  color: #f9f4e8;
+}
+.demo-strip span,
+.closing-cta p,
+.footer p,
+.footer .small,
+.footer-bottom {
+  color: #d9c69e;
+}
+.values-strip,
+.featured-section,
+.qr-section {
+  background: #f5eee1;
+}
+.values-strip svg,
+.support-art svg,
+.closing-cta svg,
+.footer .logo-mark,
+.trust-grid > div > svg,
+.benefit > span {
+  color: #c79a43;
+}
+.support-art em,
+.closing-cta h2 em {
+  color: #e0bd72;
+}
+.hero.container {
+  background: #15120f;
+}
+.hero.container::before,
+.hero.container::after,
+.hero-memorial-stage .hero-orbit {
+  border-color: #c79a4338;
+}
+.hero .hero-eyebrow,
+.hero .hero-eyebrow svg,
+.hero h1 em,
+.hero .hero-trust svg,
+.hero-side-note svg {
+  color: #e0bd72;
+}
+.hero .hero-actions .btn {
+  background: #c79a43;
+  border-color: #c79a43;
+  color: #15120f;
+}
+.hero .hero-actions .btn:hover {
+  background: #e0bd72;
+  border-color: #e0bd72;
+}
+.hero-side-note {
+  background: #231c14;
+  border-color: #e0bd7244;
+}
+.hero-memory-copy > p,
+.hero-memory-image span {
+  color: #b88633;
+}
+.hero-memory-copy h2,
+.hero-card-progress strong {
+  color: #15120f;
+}
+.hero-progress-line span {
+  background: #c79a43;
+}
+.dashboard {
+  background: #f5eee1;
+}
+.sidebar {
+  background: #15120f;
+  border-color: #2c241a;
+}
+.sidebar .logo,
+.sidebar .logo-caption,
+.sidebar-nav a,
+.sidebar-help,
+.sidebar-help p,
+.sidebar-help strong,
+.sidebar-help a,
+.sidebar-bottom > .text-link {
+  color: #f8f1e4;
+}
+.workspace-label {
+  color: #c9a762;
+}
+.sidebar-nav a.active,
+.sidebar-nav a:hover {
+  background: #302516;
+  color: #e6c47d;
+}
+.sidebar-help {
+  background: #241c14;
+  border-color: #48361e;
+}
+.sidebar-help svg,
+.logo-mark {
+  color: #c79a43;
+}
+.dash-header,
+.stat-card,
+.panel {
+  border-color: #e4d8c4;
+}
+.dash-header,
+.stat-card,
+.panel {
+  background: #fffdf8;
+}
+.dash-banner {
+  background: #f4e7cc;
+  border-color: #e5d2a7;
+}
+.stat-foot strong,
+.data-table td strong,
+.fundraising-box strong {
+  color: #8a641e;
+}
+.fundraising-panel .progress > span,
+.legend-dot,
+.legend-dot.gold {
+  background: #c79a43;
 }
