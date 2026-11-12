@@ -137,7 +137,6 @@ export function Footer() {
               <br />
               Bringing us closer, wherever we are.
             </p>
-            <span className="small">Made with care, for Ghana and beyond.</span>
           </div>
           <div>
             <h4>THE PLATFORM</h4>
