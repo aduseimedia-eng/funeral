@@ -166,9 +166,6 @@ export function Footer() {
         <div className="footer-bottom">
           <span>© 2026 Nsaabɔdeɛ. All rights reserved.</span>
           <span>Illustrative memorials · Browser-local demonstration</span>
-          <span>
-            Ghana <span className="ghana-flag">🇬🇭</span>
-          </span>
         </div>
       </div>
     </footer>
