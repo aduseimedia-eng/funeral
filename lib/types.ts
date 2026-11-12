@@ -15,6 +15,7 @@ export interface Campaign {
   location: string;
   venue: string;
   date: string;
+  time?: string;
   image: string;
   target: number;
   status: CampaignStatus;

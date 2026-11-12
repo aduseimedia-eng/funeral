@@ -15,6 +15,7 @@ import {
 } from "recharts";
 import { Contribution } from "@/lib/types";
 import { money } from "@/lib/utils";
+import { EmptyState } from "@/components/common/ui";
 export function AnalyticsChart({
   rows,
   kind = "timeline",
@@ -83,6 +84,13 @@ export function AnalyticsChart({
       value: filtered.filter((c) => c.amount > 1000).length,
     },
   ];
+  if (!filtered.length)
+    return (
+      <EmptyState
+        title="Waiting for the first gesture"
+        description={`Verified contributions from the selected ${days} days will appear here.`}
+      />
+    );
   return (
     <div className="chart-wrap">
       <ResponsiveContainer

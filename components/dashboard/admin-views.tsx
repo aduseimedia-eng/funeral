@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   Search,
@@ -18,6 +18,12 @@ import { Badge, Modal, Field, EmptyState } from "@/components/common/ui";
 export function AdminCampaigns() {
   const { state, setState, toast } = useDemo();
   const [q, setQ] = useState("");
+  const [approved, setApproved] = useState<Campaign | null>(null);
+  useEffect(() => {
+    const id = new URLSearchParams(window.location.search).get("review");
+    const c = state.campaigns.find((c) => c.id === id);
+    if (c) setQ(c.name);
+  }, []);
   const [filter, setFilter] = useState("All statuses");
   const [action, setAction] = useState<{
     campaign: Campaign;
@@ -43,6 +49,21 @@ export function AdminCampaigns() {
           review
         </Badge>
       </div>
+      {approved && (
+        <div className="approval-success" role="status">
+          <Check size={24} />
+          <div>
+            <strong>{approved.name} is now on Explore.</strong>
+            <p>This approval applies in this browser.</p>
+            <Link className="text-link" href={`/memorial/?id=${approved.id}`}>
+              Open memorial <ArrowUpRight size={15} />
+            </Link>
+            <Link className="text-link" href="/campaigns/">
+              View Explore <ArrowUpRight size={15} />
+            </Link>
+          </div>
+        </div>
+      )}
       <div className="filter-bar">
         <div className="search-input">
           <Search />
@@ -69,7 +90,21 @@ export function AdminCampaigns() {
             <option key={s}>{s}</option>
           ))}
         </select>
+        {(q || filter !== "All statuses") && (
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              setQ("");
+              setFilter("All statuses");
+            }}
+          >
+            Clear filters
+          </button>
+        )}
       </div>
+      <p className="note-text" role="status">
+        {list.length} memorial{list.length === 1 ? "" : "s"} in this view
+      </p>
       <div className="panel">
         <div className="table-scroll">
           <table className="data-table">
@@ -170,6 +205,10 @@ export function AdminCampaigns() {
               const reason = String(
                 new FormData(e.currentTarget).get("reason"),
               );
+              if (reason.trim().length < 5) {
+                toast("Add a reason of at least five characters.");
+                return;
+              }
               setState((s) => ({
                 ...s,
                 campaigns: s.campaigns.map((c) =>
@@ -189,6 +228,7 @@ export function AdminCampaigns() {
               toast(
                 `Demo campaign status updated to ${action.status.toLowerCase()}`,
               );
+              setApproved(action.status === "Active" ? action.campaign : null);
               setAction(null);
             }}
           >

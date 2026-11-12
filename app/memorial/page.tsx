@@ -16,6 +16,7 @@ import {
   ProgressBar,
   Field,
   EmptyState,
+  Badge,
 } from "@/components/common/ui";
 import { QRCodeDisplay, campaignUrl } from "@/components/qr/qr-display";
 import { useDemo } from "@/components/providers";
@@ -24,6 +25,8 @@ export default function Memorial() {
   const { state, setState, toast, ready } = useDemo();
   const [id, setId] = useState("kwasi-mensah");
   const [fromQr, setFromQr] = useState(false);
+  const [message, setMessage] = useState("");
+  const [messageSaved, setMessageSaved] = useState(false);
   useEffect(() => {
     setId(
       new URLSearchParams(window.location.search).get("id") || "kwasi-mensah",
@@ -59,7 +62,12 @@ export default function Memorial() {
         <Navbar />
         <EmptyState
           title="Memorial not found"
-          description="Please explore the available memorials."
+          description="New demo memorials are available only in the browser where they were created."
+          action={
+            <Link className="btn" href="/campaigns/">
+              Explore memorials
+            </Link>
+          }
         />
         <Footer />
       </>
@@ -77,7 +85,8 @@ export default function Memorial() {
         await navigator.clipboard.writeText(url);
         toast("Memorial link copied");
       }
-    } catch {
+    } catch (error) {
+      if (error instanceof Error && error.name === "AbortError") return;
       toast("Share cancelled or unavailable");
     }
   };
@@ -103,17 +112,41 @@ export default function Memorial() {
             </div>
           </div>
         </div>
+        <div className="container memorial-navigation">
+          <nav aria-label="Memorial sections">
+            <a href="#their-story">Their story</a>
+            <a href="#service-details">Service details</a>
+            <a href="#condolences">Condolence book</a>
+          </nav>
+          <Badge>{c.status}</Badge>
+        </div>
+        {!["Active", "Completed"].includes(c.status) && (
+          <div className="container">
+            <div className="demo-notice memorial-status">
+              This is a {c.status.toLowerCase()} memorial preview. It is not
+              listed on Explore.
+              {c.status === "Pending" && (
+                <Link
+                  className="text-link"
+                  href={`/dashboard/admin/campaigns/?review=${c.id}`}
+                >
+                  Try demo approval <ChevronRight size={15} />
+                </Link>
+              )}
+            </div>
+          </div>
+        )}
         <div className="container memorial-grid">
           <article className="memorial-content">
-            <h2>A life to remember</h2>
-            <p>{c.obituary}</p>
-            <div className="info-card">
+            <h2 id="their-story">A life to remember</h2>
+            <p className="preserve-lines">{c.obituary}</p>
+            <div className="info-card" id="service-details">
               <h3>Celebration of life</h3>
               <div>
                 <CalendarDays />
                 <div>
                   <strong>{dateLabel(c.date)}</strong>
-                  <span>Funeral service · 9:00 am</span>
+                  <span>Funeral service · {c.time || "09:00"} GMT (Ghana)</span>
                 </div>
               </div>
               <div>
@@ -125,7 +158,7 @@ export default function Memorial() {
               </div>
             </div>
             <h2>Standing with the family</h2>
-            <p>{c.description}</p>
+            <p className="preserve-lines">{c.description}</p>
             <div className="info-card">
               <div>
                 <Users />
@@ -135,15 +168,22 @@ export default function Memorial() {
                 </div>
               </div>
             </div>
-            <h2>The condolence book</h2>
+            <h2 id="condolences">The condolence book</h2>
             <p>A few kind words can mean more than you know.</p>
+            {!state.condolences.some((m) => m.campaignId === id) && (
+              <div className="condolence-empty">
+                <Heart size={24} />
+                <h3>Leave the first memory.</h3>
+                <p>Your words can bring comfort to the family.</p>
+              </div>
+            )}
             {state.condolences
               .filter((m) => m.campaignId === id)
               .map((m) => (
                 <div className="condolence" key={m.id}>
                   <strong>{m.name}</strong>
                   <time>{dateLabel(m.date)}</time>
-                  <p>{m.message}</p>
+                  <p className="preserve-lines">{m.message}</p>
                 </div>
               ))}
             <form
@@ -155,6 +195,7 @@ export default function Memorial() {
                   toast("Please add a message of at least five characters.");
                   return;
                 }
+                if (!String(f.get("name")).trim()) return;
                 setState((s) => ({
                   ...s,
                   condolences: [
@@ -169,6 +210,8 @@ export default function Memorial() {
                   ],
                 }));
                 e.currentTarget.reset();
+                setMessage("");
+                setMessageSaved(true);
                 toast("Your message has been added to this demo memorial");
               }}
             >
@@ -189,8 +232,20 @@ export default function Memorial() {
                   maxLength={1500}
                   minLength={5}
                   placeholder="Share a memory or a few kind words…"
+                  value={message}
+                  onChange={(e) => {
+                    setMessage(e.target.value);
+                    setMessageSaved(false);
+                  }}
                 />
               </Field>
+              <span className="character-count">{message.length} / 1,500</span>
+              {messageSaved && (
+                <p className="inline-success" role="status">
+                  Your message has been added to the condolence book in this
+                  browser.
+                </p>
+              )}
               <div>
                 <button className="btn">
                   Add your message <Heart size={15} />
@@ -231,7 +286,9 @@ export default function Memorial() {
             </p>
             <QRCodeDisplay value={campaignUrl(id)} />
             <p className="demo-caption">
-              Memorial stories and portraits are fictional.
+              {id.startsWith("demo-")
+                ? "This memorial exists only in this browser. Sharing its link will not transfer your demo data to another device."
+                : "Memorial stories and portraits are fictional."}
             </p>
           </aside>
         </div>

@@ -30,7 +30,7 @@ Other account screens: `/register/`, `/forgot-password/`, `/reset-password/`, `/
 - Browse `/campaigns/`, search/filter memorials, open a memorial, and add a condolence.
 - Use checkout to choose a preset/custom GHS amount, fictional donor details, acknowledgement preference, payment method, and success/failure simulation. A verified demo record updates the corresponding totals. Failed attempts remain separate and never increase verified totals.
 - Sign in as a contributor before checkout to link the new local contribution to that contributor’s own history. Guest records remain unlinked.
-- Create/edit a memorial in the family dashboard, including a locally uploaded photo. New memorials are pending. Approve them in the admin demo to make them discoverable and accept simulated contributions.
+- Create/edit a memorial in three steps: details and portrait, story, then review. Choose the service time in Ghana, preview the full memorial, and follow the confirmation link to demo approval. Approved memorials appear on Explore in this browser and accept simulated contributions.
 - Record verified cash contributions, search/filter/sort/page the register, and export CSV reports.
 - Generate campaign URL QR codes, copy links, open a WhatsApp sharing draft, and download standalone QR PNGs or A4 poster PNG/PDF files. All exports happen in the browser.
 - Use MC management to assign/pause Kofi Owusu, then switch to MC mode to mark contributions announced or return them to pending. Anonymous names and private amounts are removed by `mcView` before the announcement cards receive them.
@@ -54,7 +54,7 @@ Replace the provider’s local state operations with a future Django REST Framew
 
 All users, memorial stories, portraits, transactions, and analytics are illustrative. **No money is transferred.** Local role navigation is not an access-control boundary. Anyone with access to the browser can switch demo roles and inspect demo data. MC privacy is a UI/data-projection demonstration, not server-enforced security.
 
-Changes are stored under `nsaa-demo-v1` in localStorage. They do not synchronise between people, browsers, or devices. If storage is full, a toast explains that current edits will last only for the current page session. Uploads are limited to 2 MB per photograph. Use Settings → Reset demonstration to restore the seed data.
+Changes are stored under `nsaa-demo-v1` in localStorage. They do not synchronise between people, browsers, or devices. If saving fails, a persistent notice explains that current edits may be lost after reloading. JPG, PNG and WebP uploads up to 8 MB are resized to a maximum 1,000-pixel edge before storage. Withdrawal previews are saved per memorial. Use Settings → Reset demonstration to restore the seed data.
 
 QR pausing is local: links containing `via=qr` display a paused screen in the browser where the code was paused. Global revocation and real scan analytics require a future backend. QR statistics are clearly marked mock data. Withdrawal requests, user suspension, and email notifications are visual demonstrations and do not perform financial, security, or communication operations.
 
@@ -67,5 +67,7 @@ npm run typecheck
 npm test
 npm run build
 ```
+
+With the local preview running, `npm run test:browser` runs isolated, headless Microsoft Edge tests for creation → approval → Explore → condolence → simulated contribution, mobile navigation/layouts, filter resets, and persisted withdrawal previews. Set `PREVIEW_URL` to test a different local port; the default is `http://localhost:3000`. These tests use fresh browser contexts and do not change your own demo data. Screenshots and failure traces go to the ignored `test-results/` directory.
 
 See [asset provenance and generation prompts](docs/ASSETS.md) for the locally included artwork.

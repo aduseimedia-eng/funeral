@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState, ReactNode } from "react";
+import { useEffect, useRef, useState, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -16,6 +16,7 @@ import {
   ArrowUpRight,
   ArrowLeft,
   Menu,
+  X,
   ShieldCheck,
   ScrollText,
   Activity,
@@ -72,6 +73,44 @@ export function DashboardShell({
 }) {
   const { state, setState, ready } = useDemo();
   const [open, setOpen] = useState(false);
+  const sidebar = useRef<HTMLElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    sidebar.current?.querySelector<HTMLButtonElement>("button")?.focus();
+    const closeOnResize = () => {
+      if (window.innerWidth > 900) setOpen(false);
+    };
+    const keys = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Tab") return;
+      const items = Array.from(
+        sidebar.current?.querySelectorAll<HTMLElement>(
+          "a[href],button:not(:disabled)",
+        ) || [],
+      ).filter((el) => el.getClientRects().length);
+      const first = items[0],
+        last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      }
+      if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    };
+    window.addEventListener("resize", closeOnResize);
+    document.addEventListener("keydown", keys);
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", keys);
+      window.removeEventListener("resize", closeOnResize);
+      menuButton.current?.focus();
+    };
+  }, [open]);
   const router = useRouter();
   const user =
     state.user?.role === role
@@ -92,13 +131,28 @@ export function DashboardShell({
       {open && (
         <div className="sidebar-overlay" onClick={() => setOpen(false)} />
       )}
-      <aside className={`sidebar ${open ? "open" : ""}`}>
+      <aside
+        ref={sidebar}
+        id="dashboard-sidebar"
+        role={open ? "dialog" : undefined}
+        aria-modal={open || undefined}
+        aria-label="Workspace navigation"
+        className={`sidebar ${open ? "open" : ""}`}
+      >
+        <button
+          className="icon-button sidebar-close"
+          aria-label="Close dashboard menu"
+          onClick={() => setOpen(false)}
+        >
+          <X size={22} />
+        </button>
         <Logo />
         <div className="workspace-label">{title.toUpperCase()}</div>
         <nav className="sidebar-nav" aria-label="Dashboard navigation">
           {menuItems[role].map(([path, label, Icon]) => (
             <Link
               className={section === path ? "active" : ""}
+              aria-current={section === path ? "page" : undefined}
               key={path}
               onClick={() => setOpen(false)}
               href={`/dashboard/${role}/${path ? path + "/" : ""}`}
@@ -141,12 +195,14 @@ export function DashboardShell({
           </button>
         </div>
       </aside>
-      <div className="dashboard-main">
+      <div className="dashboard-main" inert={open}>
         <header className="dash-header">
           <div className="dash-header-title">
             <button
               className="icon-button mobile-dash-toggle"
               aria-label="Toggle dashboard menu"
+              ref={menuButton}
+              aria-controls="dashboard-sidebar"
               aria-expanded={open}
               onClick={() => setOpen(!open)}
             >

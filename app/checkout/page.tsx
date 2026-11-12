@@ -60,6 +60,11 @@ export default function Checkout() {
         <EmptyState
           title="Contributions are unavailable"
           description="Please choose an active memorial."
+          action={
+            <Link className="btn" href="/campaigns/">
+              Explore memorials
+            </Link>
+          }
         />
         <Footer />
       </>
@@ -106,6 +111,7 @@ export default function Checkout() {
               <div
                 key={label}
                 className={`checkout-step ${step >= i ? "active" : ""}`}
+                aria-current={step === i ? "step" : undefined}
               >
                 <span>{step > i ? <Check size={12} /> : i + 1}</span>
                 {label}

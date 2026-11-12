@@ -4,3 +4,5 @@ out/
 *.tsbuildinfo
 .sites-local/
 *.tar.gz
+test-results/
+playwright-report/

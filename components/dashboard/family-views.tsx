@@ -1,4 +1,5 @@
 "use client";
+import { CampaignEditor } from "./campaign-editor";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
@@ -124,14 +125,18 @@ export function FamilyCampaigns() {
   const { state } = useDemo();
   const [editing, setEditing] = useState<Campaign | "new" | null>(null);
   const [q, setQ] = useState("");
+  const [status, setStatus] = useState("All statuses");
   useEffect(() => {
-    if (new URLSearchParams(window.location.search).get("create") === "1")
+    if (new URLSearchParams(window.location.search).get("create") === "1") {
       setEditing("new");
+      window.history.replaceState(null, "", window.location.pathname);
+    }
   }, []);
   const list = state.campaigns.filter(
     (c) =>
       (c.id === "kwasi-mensah" || c.id.startsWith("demo-")) &&
-      c.name.toLowerCase().includes(q.toLowerCase()),
+      c.name.toLowerCase().includes(q.trim().toLowerCase()) &&
+      (status === "All statuses" || c.status === status),
   );
   return (
     <>
@@ -155,7 +160,38 @@ export function FamilyCampaigns() {
             onChange={(e) => setQ(e.target.value)}
           />
         </div>
+        <select
+          aria-label="Filter your memorials"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          {[
+            "All statuses",
+            "Pending",
+            "Active",
+            "Completed",
+            "Suspended",
+            "Rejected",
+          ].map((s) => (
+            <option key={s}>{s}</option>
+          ))}
+        </select>
+        {(q || status !== "All statuses") && (
+          <button
+            className="btn btn-secondary"
+            onClick={() => {
+              setQ("");
+              setStatus("All statuses");
+            }}
+          >
+            Clear filters
+          </button>
+        )}
       </div>
+      <p className="note-text" role="status">
+        {list.length} memorial{list.length === 1 ? "" : "s"} · New pages appear
+        on Explore after demo approval.
+      </p>
       {list.length ? (
         <div className="campaign-grid">
           {list.map((c) => (
@@ -177,6 +213,14 @@ export function FamilyCampaigns() {
                   <strong>{money(totalFor(state.contributions, c.id))}</strong>
                   <span>of {money(c.target)}</span>
                 </div>
+                {c.status === "Pending" && (
+                  <Link
+                    className="text-link mt-20"
+                    href={`/dashboard/admin/campaigns/?review=${c.id}`}
+                  >
+                    Continue to demo approval <ArrowUpRight size={14} />
+                  </Link>
+                )}
                 <div className="form-actions">
                   <button
                     className="btn btn-secondary btn-small"
@@ -203,229 +247,9 @@ export function FamilyCampaigns() {
         />
       )}
       {editing && (
-        <CampaignModal campaign={editing} onClose={() => setEditing(null)} />
+        <CampaignEditor campaign={editing} onClose={() => setEditing(null)} />
       )}
     </>
-  );
-}
-function CampaignModal({
-  campaign,
-  onClose,
-}: {
-  campaign: Campaign | "new";
-  onClose: () => void;
-}) {
-  const { setState, toast } = useDemo();
-  const editing = campaign !== "new";
-  const [picture, setPicture] = useState(
-    editing ? campaign.image : "/images/kwasi-portrait.png",
-  );
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-  return (
-    <Modal
-      title={editing ? "Care for their memorial" : "Create a funeral page"}
-      onClose={onClose}
-    >
-      <form
-        className="form-stack"
-        onSubmit={(e) => {
-          e.preventDefault();
-          const f = new FormData(e.currentTarget);
-          const record: Campaign = {
-            id: editing
-              ? campaign.id
-              : `demo-${crypto.randomUUID().slice(0, 10)}`,
-            name: String(f.get("name")).trim(),
-            years: String(f.get("years")),
-            location: String(f.get("location")),
-            venue: String(f.get("venue")),
-            date: String(f.get("date")),
-            target: Number(f.get("target")),
-            image: picture,
-            status: editing ? campaign.status : "Pending",
-            organiser: String(f.get("organiser")),
-            obituary: String(f.get("obituary")),
-            description: String(f.get("description")),
-          };
-          if (!record.name) return;
-          setState((s) => ({
-            ...s,
-            campaigns: editing
-              ? s.campaigns.map((c) => (c.id === record.id ? record : c))
-              : [...s.campaigns, record],
-            activeCampaignId: record.id,
-            audit: [
-              {
-                id: crypto.randomUUID(),
-                action: `${editing ? "Updated" : "Created"} memorial: ${record.name} (demo)`,
-                date: new Date().toISOString(),
-              },
-              ...s.audit,
-            ],
-          }));
-          toast(
-            editing
-              ? "Memorial details updated"
-              : "Demo memorial created. Review it in the admin workspace to approve.",
-          );
-          onClose();
-        }}
-      >
-        <div className="demo-notice">
-          <Info />
-          Use fictional details. New demo memorials start pending and can be
-          approved in the superadmin workspace.
-        </div>
-        <Field label="Full name of your loved one">
-          <input
-            name="name"
-            required
-            pattern=".*\S.*"
-            maxLength={100}
-            defaultValue={editing ? campaign.name : ""}
-            placeholder="e.g. Nana Kwasi Mensah"
-          />
-        </Field>
-        <div className="form-grid">
-          <Field label="Years of life">
-            <input
-              name="years"
-              required
-              defaultValue={editing ? campaign.years : ""}
-              placeholder="1948 — 2026"
-            />
-          </Field>
-          <Field label="Family / organiser">
-            <input
-              name="organiser"
-              required
-              defaultValue={editing ? campaign.organiser : "The Mensah family"}
-            />
-          </Field>
-        </div>
-        <Field label="Memorial photograph (max 2 MB)">
-          <input
-            type="file"
-            accept="image/png,image/jpeg,image/webp"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (!file) return;
-              if (file.size > 2 * 1024 * 1024) {
-                setError("Please choose an image smaller than 2 MB.");
-                return;
-              }
-              if (
-                !["image/png", "image/jpeg", "image/webp"].includes(file.type)
-              ) {
-                setError("Please choose a PNG, JPEG, or WebP image.");
-                return;
-              }
-              setLoading(true);
-              const reader = new FileReader();
-              reader.onload = () => {
-                setPicture(String(reader.result));
-                setError("");
-                setLoading(false);
-              };
-              reader.onerror = () => {
-                setError("The image could not be loaded.");
-                setLoading(false);
-              };
-              reader.readAsDataURL(file);
-            }}
-          />
-        </Field>
-        <img
-          src={picture}
-          alt="Memorial photograph preview"
-          style={{
-            height: 95,
-            width: 80,
-            objectFit: "cover",
-            objectPosition: "top",
-            borderRadius: 4,
-          }}
-        />
-        {error && <p className="error-text">{error}</p>}
-        <div className="form-grid">
-          <Field label="Funeral date">
-            <input
-              name="date"
-              required
-              type="date"
-              defaultValue={editing ? campaign.date : ""}
-            />
-          </Field>
-          <Field label="City / town">
-            <select
-              name="location"
-              defaultValue={editing ? campaign.location : "Kumasi"}
-            >
-              {[
-                "Accra",
-                "Kumasi",
-                "Cape Coast",
-                "Takoradi",
-                "Tamale",
-                "Ho",
-                "Sunyani",
-                "Koforidua",
-              ].map((l) => (
-                <option key={l}>{l}</option>
-              ))}
-            </select>
-          </Field>
-        </div>
-        <Field label="Funeral venue">
-          <input
-            name="venue"
-            required
-            defaultValue={editing ? campaign.venue : ""}
-            placeholder="Church or venue name and address"
-          />
-        </Field>
-        <Field label="Fundraising target (GHS)">
-          <input
-            name="target"
-            type="number"
-            min="1"
-            max="10000000"
-            required
-            defaultValue={editing ? campaign.target : 50000}
-          />
-        </Field>
-        <Field label="Their story / obituary">
-          <textarea
-            name="obituary"
-            required
-            minLength={20}
-            maxLength={5000}
-            defaultValue={editing ? campaign.obituary : ""}
-            placeholder="Tell the story of their life…"
-          />
-        </Field>
-        <Field label="A message from the family">
-          <textarea
-            name="description"
-            required
-            minLength={10}
-            maxLength={3000}
-            defaultValue={editing ? campaign.description : ""}
-            placeholder="How can the community support your family?"
-          />
-        </Field>
-        <div className="form-actions">
-          <button type="button" className="btn btn-secondary" onClick={onClose}>
-            Cancel
-          </button>
-          <button disabled={loading} className="btn">
-            {editing ? "Save changes" : "Create demo memorial"}{" "}
-            <ArrowUpRight size={14} />
-          </button>
-        </div>
-      </form>
-    </Modal>
   );
 }
 export function FamilyPeople({ mc = false }: { mc?: boolean }) {
@@ -643,11 +467,11 @@ export function FamilyPeople({ mc = false }: { mc?: boolean }) {
   );
 }
 export function WithdrawalDemo() {
-  const { toast } = useDemo();
+  const { state, setState, toast } = useDemo();
   const [open, setOpen] = useState(false);
-  const [requests, setRequests] = useState<
-    { id: string; amount: number; date: string }[]
-  >([]);
+  const requests = state.withdrawalRequests.filter(
+    (r) => r.campaignId === state.activeCampaignId,
+  );
   return (
     <>
       <div className="dash-title">
@@ -667,28 +491,32 @@ export function WithdrawalDemo() {
       </div>
       {requests.length ? (
         <div className="panel">
-          <table className="data-table">
-            <thead>
-              <tr>
-                <th>Demo reference</th>
-                <th>Requested amount</th>
-                <th>Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((r) => (
-                <tr key={r.id}>
-                  <td>{r.id}</td>
-                  <td>{money(r.amount)}</td>
-                  <td>{dateLabel(r.date)}</td>
-                  <td>
-                    <Badge>Demo only</Badge>
-                  </td>
+          <div className="table-scroll">
+            <table className="data-table">
+              <thead>
+                <tr>
+                  <th>Demo reference</th>
+                  <th>Requested amount</th>
+                  <th>Purpose</th>
+                  <th>Date</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {requests.map((r) => (
+                  <tr key={r.id}>
+                    <td>{r.id}</td>
+                    <td>{money(r.amount)}</td>
+                    <td>{r.purpose}</td>
+                    <td>{dateLabel(r.date)}</td>
+                    <td>
+                      <Badge>Demo only</Badge>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       ) : (
         <EmptyState
@@ -706,14 +534,21 @@ export function WithdrawalDemo() {
             onSubmit={(e) => {
               e.preventDefault();
               const f = new FormData(e.currentTarget);
-              setRequests((r) => [
-                {
-                  id: `DEMO-WR-${crypto.randomUUID().slice(0, 6)}`,
-                  amount: Number(f.get("amount")),
-                  date: new Date().toISOString(),
-                },
-                ...r,
-              ]);
+              const purpose = String(f.get("purpose")).trim();
+              if (!purpose) return;
+              setState((s) => ({
+                ...s,
+                withdrawalRequests: [
+                  {
+                    id: `DEMO-WR-${crypto.randomUUID().slice(0, 6)}`,
+                    campaignId: state.activeCampaignId,
+                    amount: Number(f.get("amount")),
+                    date: new Date().toISOString(),
+                    purpose,
+                  },
+                  ...s.withdrawalRequests,
+                ],
+              }));
               setOpen(false);
               toast("Demo request created. No funds will be withdrawn.");
             }}
@@ -732,7 +567,12 @@ export function WithdrawalDemo() {
               />
             </Field>
             <Field label="Purpose">
-              <textarea required placeholder="Funeral arrangements (demo)" />
+              <textarea
+                name="purpose"
+                required
+                maxLength={500}
+                placeholder="Funeral arrangements (demo)"
+              />
             </Field>
             <button className="btn">Save demo request</button>
           </form>

@@ -27,6 +27,13 @@ type State = {
   members: FamilyMember[];
   audit: AuditEntry[];
   qrDisabled: string[];
+  withdrawalRequests: {
+    id: string;
+    campaignId: string;
+    amount: number;
+    date: string;
+    purpose: string;
+  }[];
   preferences: { acknowledgement: string; notifications: boolean };
 };
 const initial: State = {
@@ -41,6 +48,7 @@ const initial: State = {
   members: seed.familyMembers,
   audit: seed.auditLog,
   qrDisabled: [],
+  withdrawalRequests: [],
   preferences: { acknowledgement: "full", notifications: true },
 };
 const Context = createContext<{
@@ -53,6 +61,7 @@ export function Providers({ children }: { children: ReactNode }) {
   const [state, setState] = useState(initial);
   const [ready, setReady] = useState(false);
   const [notice, setNotice] = useState("");
+  const [storageError, setStorageError] = useState(false);
   useEffect(() => {
     try {
       const s = localStorage.getItem("nsaa-demo-v1");
@@ -64,10 +73,9 @@ export function Providers({ children }: { children: ReactNode }) {
     if (ready) {
       try {
         localStorage.setItem("nsaa-demo-v1", JSON.stringify(state));
+        setStorageError(false);
       } catch {
-        setNotice(
-          "Browser storage is full. Your current changes will last until this page closes.",
-        );
+        setStorageError(true);
       }
     }
   }, [state, ready]);
@@ -79,6 +87,13 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <Context.Provider value={{ state, setState, toast: setNotice, ready }}>
       {children}
+      {storageError && (
+        <div className="storage-warning" role="alert">
+          Your browser could not save these changes. Keep this page open;
+          changes may be lost after a reload. Try removing a large memorial
+          photograph to free up space.
+        </div>
+      )}
       {notice && (
         <div className="toast" role="status">
           <span className="toast-dot" />

@@ -1,4 +1,5 @@
 "use client";
+import { isPublicMemorial } from "@/lib/memorials";
 import { useState } from "react";
 import { Search, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
@@ -10,17 +11,34 @@ import {
 } from "@/components/common/ui";
 import { useDemo } from "@/components/providers";
 export default function Campaigns() {
-  const { state } = useDemo();
+  const { state, ready } = useDemo();
   const [q, setQ] = useState("");
   const [location, setLocation] = useState("All locations");
   const [status, setStatus] = useState("All memorials");
-  const rows = state.campaigns.filter(
-    (c) =>
-      ["Active", "Completed"].includes(c.status) &&
-      `${c.name} ${c.organiser}`.toLowerCase().includes(q.toLowerCase()) &&
-      (location === "All locations" || c.location === location) &&
-      (status === "All memorials" || c.status === status),
-  );
+  const [sort, setSort] = useState("recent");
+  const reset = () => {
+    setQ("");
+    setLocation("All locations");
+    setStatus("All memorials");
+    setSort("recent");
+  };
+  const rows = state.campaigns
+    .filter(
+      (c) =>
+        isPublicMemorial(c) &&
+        `${c.name} ${c.organiser}`
+          .toLowerCase()
+          .includes(q.trim().toLowerCase()) &&
+        (location === "All locations" || c.location === location) &&
+        (status === "All memorials" || c.status === status),
+    )
+    .sort((a, b) =>
+      sort === "name"
+        ? a.name.localeCompare(b.name)
+        : sort === "date"
+          ? b.date.localeCompare(a.date)
+          : 0,
+    );
   return (
     <>
       <Navbar />
@@ -49,7 +67,11 @@ export default function Campaigns() {
             onChange={(e) => setLocation(e.target.value)}
           >
             <option>All locations</option>
-            {[...new Set(state.campaigns.map((c) => c.location))].map((l) => (
+            {[
+              ...new Set(
+                state.campaigns.filter(isPublicMemorial).map((c) => c.location),
+              ),
+            ].map((l) => (
               <option key={l}>{l}</option>
             ))}
           </select>
@@ -62,12 +84,33 @@ export default function Campaigns() {
             <option>Active</option>
             <option>Completed</option>
           </select>
+          <select
+            aria-label="Sort memorials"
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+          >
+            <option value="recent">Recently added</option>
+            <option value="name">Name A–Z</option>
+            <option value="date">Latest service date</option>
+          </select>
+          {(q ||
+            location !== "All locations" ||
+            status !== "All memorials" ||
+            sort !== "recent") && (
+            <button className="btn btn-secondary" onClick={reset}>
+              Clear filters
+            </button>
+          )}
         </div>
-        <p className="note-text">
+        <p className="note-text" role="status">
           {rows.length} memorial{rows.length !== 1 ? "s" : ""} · Illustrative
           demo campaigns
         </p>
-        {rows.length ? (
+        {!ready ? (
+          <div className="loading-state" role="status">
+            Loading memorials…
+          </div>
+        ) : rows.length ? (
           <div className="campaign-grid">
             {rows.map((c) => (
               <CampaignCard key={c.id} campaign={c} />
@@ -77,6 +120,11 @@ export default function Campaigns() {
           <EmptyState
             title="No memorials found"
             description="Try another name, location, or status."
+            action={
+              <button className="btn btn-secondary" onClick={reset}>
+                Clear filters
+              </button>
+            }
           />
         )}
         <div className="info-card mt-20">

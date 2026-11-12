@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, ReactNode } from "react";
 import {
   ArrowUpRight,
@@ -29,6 +30,19 @@ export function Logo({ light = false }: { light?: boolean }) {
 }
 export function Navbar() {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const menuButton = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", close);
+    return () => document.removeEventListener("keydown", close);
+  }, [open]);
   return (
     <>
       <div className="demo-strip">
@@ -40,18 +54,33 @@ export function Navbar() {
           <Logo />
           <nav
             className={open ? "nav-links open" : "nav-links"}
+            id="main-navigation"
             aria-label="Main navigation"
           >
-            <Link onClick={() => setOpen(false)} href="/">
+            <Link
+              aria-current={pathname === "/" ? "page" : undefined}
+              onClick={() => setOpen(false)}
+              href="/"
+            >
               Home
             </Link>
-            <Link onClick={() => setOpen(false)} href="/campaigns/">
+            <Link
+              aria-current={
+                pathname.startsWith("/campaigns") ? "page" : undefined
+              }
+              onClick={() => setOpen(false)}
+              href="/campaigns/"
+            >
               Explore memorials
             </Link>
             <Link onClick={() => setOpen(false)} href="/#how-it-works">
               How it works
             </Link>
-            <Link onClick={() => setOpen(false)} href="/about/">
+            <Link
+              aria-current={pathname.startsWith("/about") ? "page" : undefined}
+              onClick={() => setOpen(false)}
+              href="/about/"
+            >
               Our story
             </Link>
             <Link
@@ -60,6 +89,13 @@ export function Navbar() {
               className="mobile-login"
             >
               Log in
+            </Link>
+            <Link
+              className="mobile-create"
+              href="/dashboard/family/campaigns/?create=1"
+              onClick={() => setOpen(false)}
+            >
+              Create a funeral page <ArrowUpRight size={16} />
             </Link>
           </nav>
           <div className="nav-actions">
@@ -74,7 +110,9 @@ export function Navbar() {
             </Link>
             <button
               className="icon-button mobile-menu"
-              aria-label="Toggle menu"
+              ref={menuButton}
+              aria-controls="main-navigation"
+              aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
               onClick={() => setOpen(!open)}
             >
@@ -209,15 +247,18 @@ export function CampaignCard({ campaign }: { campaign: Campaign }) {
 export function EmptyState({
   title = "Nothing here yet",
   description = "New activity will appear here.",
+  action,
 }: {
   title?: string;
   description?: string;
+  action?: ReactNode;
 }) {
   return (
     <div className="empty-state">
       <Flower2 size={32} />
       <h3>{title}</h3>
       <p>{description}</p>
+      {action && <div className="empty-action">{action}</div>}
     </div>
   );
 }
@@ -231,19 +272,29 @@ export function Modal({
   children: ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const closeRef = useRef(onClose);
+  useEffect(() => {
+    closeRef.current = onClose;
+  }, [onClose]);
   useEffect(() => {
     const previous = document.activeElement as HTMLElement;
     ref.current?.focus();
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") closeRef.current();
       if (e.key === "Tab") {
-        const list = ref.current?.querySelectorAll<HTMLElement>(
-          'button,a,input,select,textarea,[tabindex="0"]',
-        );
+        const list = Array.from(
+          ref.current?.querySelectorAll<HTMLElement>(
+            'button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex="0"]',
+          ) || [],
+        ).filter((el) => el.getClientRects().length > 0);
         if (!list?.length) return;
         const first = list[0],
           last = list[list.length - 1];
-        if (e.shiftKey && document.activeElement === first) {
+        if (
+          e.shiftKey &&
+          (document.activeElement === first ||
+            document.activeElement === ref.current)
+        ) {
           e.preventDefault();
           last.focus();
         } else if (!e.shiftKey && document.activeElement === last) {
@@ -260,7 +311,7 @@ export function Modal({
       document.body.style.overflow = old;
       previous?.focus();
     };
-  }, [onClose]);
+  }, []);
   return (
     <div
       className="modal-backdrop"

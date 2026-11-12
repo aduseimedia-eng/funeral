@@ -114,7 +114,10 @@ export function ContributionTable({
           <select
             aria-label="Sort contribution records"
             value={sort}
-            onChange={(e) => setSort(e.target.value)}
+            onChange={(e) => {
+              setSort(e.target.value);
+              setPage(1);
+            }}
           >
             <option value="newest">Newest first</option>
             <option value="amount">Highest amount</option>
@@ -123,10 +126,24 @@ export function ContributionTable({
           <button
             className="icon-button"
             aria-label="Export filtered demo records"
+            disabled={!filtered.length}
             onClick={exportRows}
           >
             <Download size={16} />
           </button>
+          {(q || status !== "All statuses" || method !== "All methods") && (
+            <button
+              className="btn btn-secondary btn-small"
+              onClick={() => {
+                setQ("");
+                setStatus("All statuses");
+                setMethod("All methods");
+                setPage(1);
+              }}
+            >
+              Clear filters
+            </button>
+          )}
         </div>
       )}
       {compact && (
@@ -135,11 +152,24 @@ export function ContributionTable({
             <h2>Recent contributions</h2>
             <p>A little support, from a caring community.</p>
           </div>
-          <a href="/dashboard/family/contributions/">View all ↗</a>
+          <a
+            href={
+              donor
+                ? "/dashboard/donor/history/"
+                : "/dashboard/family/contributions/"
+            }
+          >
+            View all ↗
+          </a>
         </div>
       )}
       {visible.length ? (
-        <div className="table-scroll">
+        <div
+          className="table-scroll"
+          tabIndex={0}
+          role="region"
+          aria-label="Contribution records, scroll horizontally for more columns"
+        >
           <table className="data-table">
             <thead>
               <tr>
@@ -225,8 +255,16 @@ export function ContributionTable({
         </div>
       ) : (
         <EmptyState
-          title="No matching contributions"
-          description="Try changing your search or filters."
+          title={
+            rows.length
+              ? "No matching contributions"
+              : "The first gesture starts here."
+          }
+          description={
+            rows.length
+              ? "Try changing your search or filters."
+              : "Verified contributions will appear here when you complete a demo contribution or record cash."
+          }
         />
       )}
       <div className="pagination">
